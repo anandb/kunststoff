@@ -14,6 +14,7 @@ import javax.swing.plaf.basic.*;
 
 public class KunststoffTabbedPaneUI extends BasicTabbedPaneUI {
   private static final int SHADOW_WIDTH = 5;
+  private final ColorUIResource bgColor = new ColorUIResource(180, 180, 180);
 
   public static ComponentUI createUI(JComponent c) {
     return new KunststoffTabbedPaneUI();
@@ -21,6 +22,7 @@ public class KunststoffTabbedPaneUI extends BasicTabbedPaneUI {
 
   protected void installDefaults() {
     super.installDefaults();
+    tabPane.setBackground(bgColor);
   }
 
   /*

@@ -15,7 +15,8 @@ import javax.swing.plaf.basic.*;
  * which makes it really plug and play!
  */
 public class KunststoffListUI extends BasicListUI {
-  private boolean isToolkitTrueColor = false;
+    private final ColorUIResource bgColor = new ColorUIResource(180, 180, 180);
+    private boolean isToolkitTrueColor = false;
 
   public KunststoffListUI(JComponent list) {
     // this will be needed for the decision if a big gradient or a small shadow
@@ -23,6 +24,13 @@ public class KunststoffListUI extends BasicListUI {
     // we will then paint a small shadow instead
     isToolkitTrueColor = KunststoffUtilities.isToolkitTrueColor(list);
   }
+
+  @Override
+    protected void installDefaults() {
+        super.installDefaults();
+        list.setBackground(bgColor);
+    }
+
 
   public static ComponentUI createUI(JComponent list) {
     return new KunststoffListUI(list);
@@ -89,6 +97,4 @@ public class KunststoffListUI extends BasicListUI {
     }
     super.paintCell(g, row, rowBounds, cellRenderer, dataModel, selModel, leadIndex);
   }
-
-
 }

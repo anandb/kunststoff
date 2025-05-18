@@ -11,13 +11,20 @@ import javax.swing.*;
 import javax.swing.plaf.*;
 import javax.swing.plaf.basic.*;
 
-public class KunststoffTextAreaUI extends BasicTextAreaUI{
+public class KunststoffTextAreaUI extends BasicTextAreaUI {
   protected JComponent myComponent;
+  private final ColorUIResource bgColor = new ColorUIResource(180, 180, 180);
 
   public KunststoffTextAreaUI(JComponent c) {
     super();
     myComponent = c;
   }
+
+    @Override
+    protected void installDefaults() {
+        super.installDefaults();
+        myComponent.setBackground(bgColor);
+    }
 
   public static ComponentUI createUI(JComponent c) {
     return new KunststoffTextAreaUI(c);

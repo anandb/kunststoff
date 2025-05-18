@@ -15,6 +15,7 @@ import javax.swing.plaf.basic.*;
 public class KunststoffTreeUI extends BasicTreeUI {
   protected static ImageIcon m_iconExpanded;
   protected static ImageIcon m_iconCollapsed;
+  private final ColorUIResource bgColor = new ColorUIResource(180, 180, 180);
 
 
   public KunststoffTreeUI(JComponent c) {
@@ -29,6 +30,14 @@ public class KunststoffTreeUI extends BasicTreeUI {
   public static ComponentUI createUI(JComponent tree) {
     return new KunststoffTreeUI(tree);
   }
+
+    @Override
+    protected void installDefaults() {
+        super.installDefaults();
+        tree.setBackground(bgColor);
+    }
+
+
 
   // This method replaces the metal expand-/collaps-icons with some nicer ones.
   protected void paintExpandControl(Graphics g, Rectangle clipBounds,
