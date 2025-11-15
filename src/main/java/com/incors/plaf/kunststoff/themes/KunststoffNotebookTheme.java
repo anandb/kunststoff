@@ -41,9 +41,9 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
      */
     public KunststoffNotebookTheme()
     {
-        menuFont = new FontUIResource("Aptos",Font.PLAIN, 12);
-        controlFont = new FontUIResource("Aptos",Font.PLAIN, 11);
-        windowTitleFont =  new FontUIResource("Aptos", Font.BOLD, 12);
+        menuFont = new FontUIResource("Segoe UI",Font.PLAIN, 12);
+        controlFont = new FontUIResource("Segoe UI",Font.PLAIN, 11);
+        windowTitleFont =  new FontUIResource("Segoe UI", Font.BOLD, 12);
         monospacedFont = new FontUIResource("Hack", Font.PLAIN, 11);
     }
 

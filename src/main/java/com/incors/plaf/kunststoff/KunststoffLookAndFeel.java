@@ -30,11 +30,12 @@ package com.incors.plaf.kunststoff;
  *
  */
 
+import com.incors.plaf.kunststoff.themes.KunststoffDesktopTheme;
+
 import javax.swing.*;
 import javax.swing.plaf.*;
 import javax.swing.plaf.metal.*;
 
-import com.incors.plaf.kunststoff.themes.KunststoffDesktopTheme;
 import com.incors.plaf.kunststoff.themes.KunststoffPresentationTheme;
 
 /**
@@ -105,7 +106,7 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
     putDefault(table, "InternalFrameUI");
     // if you want a check box icon with gradients, just remove the comment from
     // the following lines. We prefer the standard icon.
-    /*
+
     putDefault(table, "CheckBoxUI");
     try {
       String className = "com.incors.plaf.kunststoff.KunststoffCheckBoxIcon";
@@ -113,7 +114,6 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
     } catch (Exception ex) {
       ex.printStackTrace();
     }
-    */
   }
 
   protected void putDefault(UIDefaults table, String uiKey) {
@@ -127,7 +127,7 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
 
   protected void createDefaultTheme() {
     if (!themeHasBeenSet) {
-      setCurrentTheme(new KunststoffPresentationTheme());
+      setCurrentTheme(new KunststoffDesktopTheme());
     }
     if (gradientTheme==null) {
       gradientTheme = new KunststoffGradientTheme();

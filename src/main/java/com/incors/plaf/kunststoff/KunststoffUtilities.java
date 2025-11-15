@@ -6,7 +6,10 @@ package com.incors.plaf.kunststoff;
  */
 
 import java.awt.*;
+
 import com.incors.plaf.*;
+
+import javax.swing.JComponent;
 
 /**
  * Collection of methods often used in the Kunststoff Look&Feel
@@ -76,4 +79,14 @@ public class KunststoffUtilities {
     int pixelsize = c.getToolkit().getColorModel().getPixelSize();
     return pixelsize >= 24;
   }
+
+    public static void resize(JComponent c) {
+        Font font = c.getFont();
+        FontMetrics fontMetrics = c.getFontMetrics(font);
+        Dimension current = c.getPreferredSize();
+        double h = current.getHeight();
+        if (h < 2 * fontMetrics.getHeight()) {
+            c.setPreferredSize(new Dimension((int) current.getWidth(), Math.max((int)current.getHeight(), 2 * fontMetrics.getHeight())));
+        }
+    }
 }

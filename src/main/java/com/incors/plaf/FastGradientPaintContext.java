@@ -44,7 +44,7 @@ class FastGradientPaintContext implements PaintContext {
 		private Raster getRaster( int parallelPos, int perpendicularLength, int parallelLength ) {
 			if ( raster == null || ( this.perpendicularLength < perpendicularLength ) )  createRaster( perpendicularLength );
 
-			Integer key = new Integer( parallelPos );
+			Integer key = Integer.valueOf(parallelPos);
 			Object o =  childRasterCache.get( key );
 			if ( o !=null ) return (Raster) o;
 			else {
