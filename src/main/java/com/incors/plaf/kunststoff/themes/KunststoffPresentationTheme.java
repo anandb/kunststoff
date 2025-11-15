@@ -93,32 +93,32 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
         return windowTitleFont;
     }
 
-    protected ColorUIResource getPrimary1()
+    public ColorUIResource getPrimary1()
     {
         return primary1;
     }
 
-    protected ColorUIResource getPrimary2()
+    public ColorUIResource getPrimary2()
     {
         return primary2;
     }
 
-    protected ColorUIResource getPrimary3()
+    public ColorUIResource getPrimary3()
     {
         return primary3;
     }
 
-    protected ColorUIResource getSecondary1()
+    public ColorUIResource getSecondary1()
     {
         return secondary1;
     }
 
-    protected ColorUIResource getSecondary2()
+    public ColorUIResource getSecondary2()
     {
         return secondary2;
     }
 
-    protected ColorUIResource getSecondary3()
+    public ColorUIResource getSecondary3()
     {
         return secondary3;
     }

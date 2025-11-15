@@ -3,7 +3,6 @@
  *
  * Created on 17. Oktober 2001, 22:40
  */
-
 package com.incors.plaf.kunststoff.themes;
 
 import java.awt.Font;
@@ -14,11 +13,11 @@ import javax.swing.UIManager;
 
 /**
  *
- * @author  christophw
+ * @author christophw
  * @version
  */
-public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.KunststoffTheme
-{
+public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.KunststoffTheme {
+
     // primary colors
     private final ColorUIResource primary1 = new ColorUIResource(22, 22, 54);
     private final ColorUIResource primary2 = new ColorUIResource(110, 110, 130);
@@ -39,91 +38,77 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
     /**
      * Crates this Theme
      */
-    public KunststoffNotebookTheme()
-    {
-        menuFont = new FontUIResource("Segoe UI",Font.PLAIN, 12);
-        controlFont = new FontUIResource("Segoe UI",Font.PLAIN, 11);
-        windowTitleFont =  new FontUIResource("Segoe UI", Font.BOLD, 12);
+    public KunststoffNotebookTheme() {
+        menuFont = new FontUIResource("Segoe UI", Font.PLAIN, 12);
+        controlFont = new FontUIResource("Segoe UI", Font.PLAIN, 11);
+        windowTitleFont = new FontUIResource("Segoe UI", Font.BOLD, 12);
         monospacedFont = new FontUIResource("Hack", Font.PLAIN, 11);
     }
 
-    public String getName()
-    {
+    public String getName() {
         return "Notebook";
     }
 
     /**
      * The Font of Labels in many cases
      */
-    public FontUIResource getControlTextFont()
-    {
+    public FontUIResource getControlTextFont() {
         return controlFont;
     }
 
     /**
      * The Font of Menus and MenuItems
      */
-    public FontUIResource getMenuTextFont()
-    {
+    public FontUIResource getMenuTextFont() {
         return menuFont;
     }
 
     /**
      * The Font of Nodes in JTrees
      */
-    public FontUIResource getSystemTextFont()
-    {
+    public FontUIResource getSystemTextFont() {
         return controlFont;
     }
 
     /**
      * The Font in TextFields, EditorPanes, etc.
      */
-    public FontUIResource getUserTextFont()
-    {
+    public FontUIResource getUserTextFont() {
         return controlFont;
     }
 
     /**
      * The Font of the Title of JInternalFrames
      */
-    public FontUIResource getWindowTitleFont()
-    {
+    public FontUIResource getWindowTitleFont() {
         return windowTitleFont;
     }
 
-    protected ColorUIResource getPrimary1()
-    {
+    public ColorUIResource getPrimary1() {
         return primary1;
     }
 
-    protected ColorUIResource getPrimary2()
-    {
+    public ColorUIResource getPrimary2() {
         return primary2;
     }
 
-    protected ColorUIResource getPrimary3()
-    {
+    public ColorUIResource getPrimary3() {
         return primary3;
     }
 
-    protected ColorUIResource getSecondary1()
-    {
+    public ColorUIResource getSecondary1() {
         return secondary1;
     }
 
-    protected ColorUIResource getSecondary2()
-    {
+    public ColorUIResource getSecondary2() {
         return secondary2;
     }
 
-    protected ColorUIResource getSecondary3()
-    {
+    public ColorUIResource getSecondary3() {
         return secondary3;
     }
 
-    public void addCustomEntriesToTable(UIDefaults table)
-    {
+    public void addCustomEntriesToTable(UIDefaults table) {
         super.addCustomEntriesToTable(table);
         UIManager.getDefaults().put("PasswordField.font", monospacedFont);
         UIManager.getDefaults().put("TextArea.font", monospacedFont);

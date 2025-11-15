@@ -15,7 +15,7 @@ import javax.swing.plaf.basic.*;
 public class KunststoffTreeUI extends BasicTreeUI {
   protected static ImageIcon m_iconExpanded;
   protected static ImageIcon m_iconCollapsed;
-  private final ColorUIResource bgColor = new ColorUIResource(180, 180, 180);
+  private final ColorUIResource bgColor = new ColorUIResource(217, 208, 180);
 
 
   public KunststoffTreeUI(JComponent c) {
