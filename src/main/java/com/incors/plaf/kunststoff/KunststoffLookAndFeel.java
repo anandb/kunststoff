@@ -46,7 +46,12 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
   private static GradientTheme gradientTheme;
   private static boolean isInstalled = false;
   private static boolean themeHasBeenSet = false; // Thanks to Jonas Kilian for
-                                                  // fixing the themes-bug
+                                                   // fixing the themes-bug
+
+  static {
+    System.setProperty("awt.useSystemAAFontSettings", "on");
+    System.setProperty("sun.font.fontmanager", "sun.font.FontManager");
+  }
 
   public KunststoffLookAndFeel() {
     // the next line was removed by Jens Niemeyer, jens@jensn.de, because it would

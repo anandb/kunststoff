@@ -17,6 +17,10 @@ import javax.swing.plaf.basic.*;
 public class KunststoffListUI extends BasicListUI {
     private final ColorUIResource bgColor = new ColorUIResource(180, 180, 180);
     private boolean isToolkitTrueColor = false;
+    private int cachedWidth = -1;
+    private int cachedHeight = -1;
+    private Color cachedShadowColor = null;
+    private int cachedShadow = -1;
 
   public KunststoffListUI(JComponent list) {
     // this will be needed for the decision if a big gradient or a small shadow
@@ -41,42 +45,50 @@ public class KunststoffListUI extends BasicListUI {
       Graphics2D g2D = (Graphics2D) g;
       Color colorBackground = c.getBackground();
       int shadow = KunststoffLookAndFeel.getBackgroundGradientShadow();
-      // we will only paint the background if the background color is not null
       if (colorBackground != null) {
         Rectangle clipBounds = g.getClipBounds();
+        int currentWidth = c.getWidth();
+        int currentHeight = c.getHeight();
         if (shadow == 0) {
-          // paint the background without gradient
           g2D.setColor(colorBackground);
           g2D.fill(clipBounds);
         } else {
-          // create the shadow color
           int red = colorBackground.getRed();
           int green = colorBackground.getGreen();
           int blue = colorBackground.getBlue();
-          Color colorShadow = new Color(red>=shadow?red-shadow:0, green>=shadow?green-shadow:0, blue>=shadow?blue-shadow:0);
+          Color colorShadow;
+          if (cachedShadowColor != null && cachedShadow == shadow) {
+            colorShadow = cachedShadowColor;
+          } else {
+            colorShadow = new Color(red>=shadow?red-shadow:0, green>=shadow?green-shadow:0, blue>=shadow?blue-shadow:0);
+            cachedShadowColor = colorShadow;
+            cachedShadow = shadow;
+          }
 
           if (isToolkitTrueColor) {
-            // paint big horizontal gradient
-            Rectangle rect = new Rectangle(0, 0, list.getWidth(), list.getHeight());
+            if (cachedWidth != currentWidth || cachedHeight != currentHeight) {
+              cachedWidth = currentWidth;
+              cachedHeight = currentHeight;
+            }
+            Rectangle rect = new Rectangle(0, 0, currentWidth, currentHeight);
             KunststoffUtilities.drawGradient(g, colorBackground, colorShadow, rect, clipBounds, false);
           } else {
             g2D.setColor(colorBackground);
             g2D.fill(clipBounds);
-            // create faded shadow color
             Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-            // paint shadow at top
             GradientPaint gradientTop = new GradientPaint(0f, 0f, colorShadow, 0f, 5f, colorShadowFaded);
             g2D.setPaint(gradientTop);
             g2D.fill(new Rectangle(clipBounds.x, clipBounds.y, clipBounds.width, 20));
-            // paint shadow at left
             GradientPaint gradientLeft = new GradientPaint(0f, 0f, colorShadow, 5f, 0f, colorShadowFaded);
             g2D.setPaint(gradientLeft);
             g2D.fill(new Rectangle(clipBounds.x, clipBounds.y, 20, clipBounds.height));
           }
         }
       }
+      paint(g, c);
+    } else {
+      paint(g, c);
     }
-    paint(g, c);
   }
 
   // We temporarily make the renderer transparent if the row is not selected

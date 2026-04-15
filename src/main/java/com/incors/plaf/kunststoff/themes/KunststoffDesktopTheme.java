@@ -29,10 +29,10 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
      * Crates this Theme
      */
     public KunststoffDesktopTheme() {
-        menuFont = new FontUIResource("Segoe UI", Font.PLAIN, 8);
-        controlFont = new FontUIResource("Segoe UI", Font.PLAIN, 11);
-        windowTitleFont = new FontUIResource("Segoe UI", Font.BOLD, 8);
-        monospacedFont = new FontUIResource("Hack", Font.PLAIN, 11);
+        menuFont = new FontUIResource("Segoe UI This", Font.PLAIN, 14);
+        controlFont = new FontUIResource("Segoe UI This", Font.PLAIN, 14);
+        windowTitleFont = new FontUIResource("Segoe UI This", Font.BOLD, 14);
+        monospacedFont = new FontUIResource("Hack", Font.PLAIN, 14);
     }
 
     public String getName() {

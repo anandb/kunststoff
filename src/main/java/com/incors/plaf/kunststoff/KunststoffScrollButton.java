@@ -9,6 +9,12 @@ import java.awt.*;
 import javax.swing.plaf.metal.*;
 
 public class KunststoffScrollButton extends MetalScrollButton {
+  private static Color cachedReflectionColor = null;
+  private static Color cachedShadowColor = null;
+  private static Color cachedReflectionFaded = null;
+  private static Color cachedShadowFaded = null;
+  private Rectangle rectReflection = new Rectangle();
+  private Rectangle rectShadow = new Rectangle();
 
   public KunststoffScrollButton( int direction, int width, boolean freeStanding) {
     super(direction, width, freeStanding);
@@ -22,29 +28,34 @@ public class KunststoffScrollButton extends MetalScrollButton {
     super.paint(g);
     int width = getWidth();
     int height = getHeight();
-    Rectangle rectReflection;
-    Rectangle rectShadow;
     boolean isVertical = (getDirection() == EAST || getDirection() == WEST);
-    if (isVertical) {
-      rectReflection = new Rectangle(1, 1, width, height/2);
-      rectShadow = new Rectangle(1, height/2, width, height/2+1);
-    } else {
-      rectReflection = new Rectangle(1, 1, width/2, height);
-      rectShadow = new Rectangle(width/2, 1, width/2+1, height);
-    }
 
-    // paint reflection gradient
     Color colorReflection = KunststoffLookAndFeel.getComponentGradientColorReflection();
-    if (colorReflection != null) {
-      Color colorReflectionFaded = KunststoffUtilities.getTranslucentColor(colorReflection, 0);
-      KunststoffUtilities.drawGradient(g, colorReflection, colorReflectionFaded, rectReflection, isVertical);
+    Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
+
+    if (cachedReflectionColor != colorReflection) {
+      cachedReflectionColor = colorReflection;
+      cachedReflectionFaded = colorReflection != null ? KunststoffUtilities.getTranslucentColor(colorReflection, 0) : null;
+    }
+    if (cachedShadowColor != colorShadow) {
+      cachedShadowColor = colorShadow;
+      cachedShadowFaded = colorShadow != null ? KunststoffUtilities.getTranslucentColor(colorShadow, 0) : null;
     }
 
-    // paint shadow gradient
-    Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
-    if (colorShadow != null) {
-      Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-      KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rectShadow, isVertical);
+    if (isVertical) {
+      rectReflection.setBounds(1, 1, width, height/2);
+      rectShadow.setBounds(1, height/2, width, height/2+1);
+    } else {
+      rectReflection.setBounds(1, 1, width/2, height);
+      rectShadow.setBounds(width/2, 1, width/2+1, height);
+    }
+
+    if (cachedReflectionFaded != null) {
+      KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, isVertical);
+    }
+
+    if (cachedShadowFaded != null) {
+      KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, isVertical);
     }
 
   }

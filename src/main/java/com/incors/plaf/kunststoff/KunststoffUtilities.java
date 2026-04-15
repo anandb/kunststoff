@@ -6,6 +6,7 @@ package com.incors.plaf.kunststoff;
  */
 
 import java.awt.*;
+import java.util.WeakHashMap;
 
 import com.incors.plaf.*;
 
@@ -15,6 +16,16 @@ import javax.swing.JComponent;
  * Collection of methods often used in the Kunststoff Look&Feel
  */
 public class KunststoffUtilities {
+
+  private static FastGradientPaint cachedGradientPaint = null;
+  private static Color cachedGradientColor1 = null;
+  private static Color cachedGradientColor2 = null;
+  private static Boolean cachedGradientVertical = null;
+
+  private static GradientPaint cachedGradientPaint2 = null;
+  private static Color cachedGradientColor1_v2 = null;
+  private static Color cachedGradientColor2_v2 = null;
+  private static Boolean cachedGradientVertical_v2 = null;
 
   /**
    * Convenience method to create a translucent <code>Color</color>.
@@ -47,7 +58,16 @@ public class KunststoffUtilities {
    */
   public static void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, boolean isVertical) {
     Graphics2D g2D = (Graphics2D) g;
-    Paint gradient = new FastGradientPaint(color1, color2, isVertical);
+    FastGradientPaint gradient;
+    if (cachedGradientColor1 == color1 && cachedGradientColor2 == color2 && cachedGradientVertical == isVertical) {
+      gradient = cachedGradientPaint;
+    } else {
+      gradient = new FastGradientPaint(color1, color2, isVertical);
+      cachedGradientPaint = gradient;
+      cachedGradientColor1 = color1;
+      cachedGradientColor2 = color2;
+      cachedGradientVertical = isVertical;
+    }
     g2D.setPaint(gradient);
     g2D.fill(rect);
   }
@@ -57,19 +77,25 @@ public class KunststoffUtilities {
    * the second rectangle defines the size of the gradient.
    */
   public static void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, Rectangle rect2, boolean isVertical) {
-    // We are currently not using the FastGradientPaint to render this gradient, because we have to decide how
-    // we can use FastGradientPaint if rect and rect2 are different.
-    if (isVertical) {
-      Graphics2D g2D = (Graphics2D) g;
-      GradientPaint gradient = new GradientPaint(0f, (float) rect.getY(), color1, 0f, (float) (rect.getHeight() + rect.getY()), color2);
-      g2D.setPaint(gradient);
-      g2D.fill(rect);
+    Graphics2D g2D = (Graphics2D) g;
+    GradientPaint gradient;
+
+    Boolean isVert = isVertical ? Boolean.TRUE : Boolean.FALSE;
+    if (cachedGradientColor1_v2 == color1 && cachedGradientColor2_v2 == color2 && cachedGradientVertical_v2 == isVert) {
+      gradient = cachedGradientPaint2;
     } else {
-      Graphics2D g2D = (Graphics2D) g;
-      GradientPaint gradient = new GradientPaint((float) rect.getX(), 0f, color1, (float) (rect.getWidth() + rect.getX()), 0f, color2);
-      g2D.setPaint(gradient);
-      g2D.fill(rect);
+      if (isVertical) {
+        gradient = new GradientPaint(0f, (float) rect.getY(), color1, 0f, (float) (rect.getHeight() + rect.getY()), color2);
+      } else {
+        gradient = new GradientPaint((float) rect.getX(), 0f, color1, (float) (rect.getWidth() + rect.getX()), 0f, color2);
+      }
+      cachedGradientPaint2 = gradient;
+      cachedGradientColor1_v2 = color1;
+      cachedGradientColor2_v2 = color2;
+      cachedGradientVertical_v2 = isVert;
     }
+    g2D.setPaint(gradient);
+    g2D.fill(rect);
   }
 
   /**
@@ -80,9 +106,15 @@ public class KunststoffUtilities {
     return pixelsize >= 24;
   }
 
+    private static final WeakHashMap<Font, FontMetrics> fontMetricsCache = new WeakHashMap<>();
+
     public static void resize(JComponent c) {
         Font font = c.getFont();
-        FontMetrics fontMetrics = c.getFontMetrics(font);
+        FontMetrics fontMetrics = fontMetricsCache.get(font);
+        if (fontMetrics == null) {
+            fontMetrics = c.getFontMetrics(font);
+            fontMetricsCache.put(font, fontMetrics);
+        }
         Dimension current = c.getPreferredSize();
         double h = current.getHeight();
         if (h < 2 * fontMetrics.getHeight()) {

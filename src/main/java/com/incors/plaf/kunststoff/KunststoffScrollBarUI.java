@@ -12,6 +12,11 @@ import javax.swing.plaf.metal.*;
 
 public class KunststoffScrollBarUI extends MetalScrollBarUI {
 
+  private static Color cachedReflectionColor = null;
+  private static Color cachedReflectionFaded = null;
+  private static Color cachedShadowColor = null;
+  private static Color cachedShadowFaded = null;
+
   public static ComponentUI createUI(JComponent c)    {
     return new KunststoffScrollBarUI();
   }
@@ -34,15 +39,19 @@ public class KunststoffScrollBarUI extends MetalScrollBarUI {
   protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
     super.paintThumb(g, c, thumbBounds);
 
-    // colors for the reflection gradient
     Color colorReflection = KunststoffLookAndFeel.getComponentGradientColorReflection();
-    Color colorReflectionFaded = KunststoffUtilities.getTranslucentColor(colorReflection, 0);
-    // colors for the shadow gradient
+    if (cachedReflectionColor != colorReflection) {
+      cachedReflectionColor = colorReflection;
+      cachedReflectionFaded = colorReflection != null ? KunststoffUtilities.getTranslucentColor(colorReflection, 0) : null;
+    }
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
-    Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
+    if (cachedShadowColor != colorShadow) {
+      cachedShadowColor = colorShadow;
+      cachedShadowFaded = colorShadow != null ? KunststoffUtilities.getTranslucentColor(colorShadow, 0) : null;
+    }
 
-    Rectangle rectReflection;  // rectangle for the reflection gradient
-    Rectangle rectShadow;  // rectangle for the shadow gradient
+    Rectangle rectReflection;
+    Rectangle rectShadow;
     if (scrollbar.getOrientation() == JScrollBar.VERTICAL) {
       rectReflection = new Rectangle(thumbBounds.x+1, thumbBounds.y, thumbBounds.width/2, thumbBounds.height);
       rectShadow = new Rectangle(thumbBounds.x + thumbBounds.width/2, thumbBounds.y, thumbBounds.width/2+1, thumbBounds.height);
@@ -51,10 +60,11 @@ public class KunststoffScrollBarUI extends MetalScrollBarUI {
       rectShadow = new Rectangle(thumbBounds.x, thumbBounds.y + thumbBounds.height/2, thumbBounds.width, thumbBounds.height/2+1);
     }
 
-    // the direction of the gradient is orthogonal to the direction of the scrollbar
     boolean isVertical = (scrollbar.getOrientation() == JScrollBar.HORIZONTAL);
-    KunststoffUtilities.drawGradient(g, colorReflection, colorReflectionFaded, rectReflection, isVertical);
-    KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rectShadow, isVertical);
+    if (cachedReflectionFaded != null && cachedShadowFaded != null) {
+      KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, isVertical);
+      KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, isVertical);
+    }
   }
 
 }

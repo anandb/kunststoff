@@ -17,6 +17,8 @@ import java.awt.image.ColorModel;
 import javax.swing.plaf.ColorUIResource;
 
 public class ColorUIResource2 extends ColorUIResource {
+
+  private static final long serialVersionUID = 1L;
   private Color myColor;
 
   // constructors

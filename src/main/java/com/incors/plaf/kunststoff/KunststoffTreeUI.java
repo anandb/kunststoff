@@ -17,14 +17,16 @@ public class KunststoffTreeUI extends BasicTreeUI {
   protected static ImageIcon m_iconCollapsed;
   private final ColorUIResource bgColor = new ColorUIResource(217, 208, 180);
 
-
-  public KunststoffTreeUI(JComponent c) {
+  static {
     try {
-      m_iconExpanded = new ImageIcon(getClass().getResource("icons/treeex.gif"));
-      m_iconCollapsed = new ImageIcon(getClass().getResource("icons/treecol.gif"));
+      m_iconExpanded = new ImageIcon(KunststoffTreeUI.class.getResource("icons/treeex.gif"));
+      m_iconCollapsed = new ImageIcon(KunststoffTreeUI.class.getResource("icons/treecol.gif"));
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public KunststoffTreeUI(JComponent c) {
   }
 
   public static ComponentUI createUI(JComponent tree) {
