@@ -12,6 +12,8 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.WeakHashMap;
 
 class FastGradientPaintContext implements PaintContext {
@@ -41,18 +43,22 @@ class FastGradientPaintContext implements PaintContext {
 
 		Gradient ( GradientInfo i ) { info = i; }
 
-		private Raster getRaster( int parallelPos, int perpendicularLength, int parallelLength ) {
+		private synchronized Raster getRaster( int parallelPos, int perpendicularLength, int parallelLength ) {
 			if ( raster == null || ( this.perpendicularLength < perpendicularLength ) )  createRaster( perpendicularLength );
 
-			Integer key = Integer.valueOf(parallelPos);
+			int pp = parallelPos;
+			if ( pp < 0 ) pp = 0;
+			else if ( pp >= info.parallelLength ) pp = info.parallelLength - 1;
+
+			Integer key = Integer.valueOf(pp);
 			Object o =  childRasterCache.get( key );
 			if ( o !=null ) return (Raster) o;
 			else {
 				Raster r;
-				if ( info.isVertical ) r = raster.createChild( 0, parallelPos, this.perpendicularLength, info.parallelLength-parallelPos, 0, 0, null );
-				else r = raster.createChild( parallelPos, 0, info.parallelLength-parallelPos, this.perpendicularLength, 0, 0, null );
+				if ( info.isVertical ) r = raster.createChild( 0, pp, this.perpendicularLength, info.parallelLength-pp, 0, 0, null );
+				else r = raster.createChild( pp, 0, info.parallelLength-pp, this.perpendicularLength, 0, 0, null );
 				childRasterCache.put( key, r );
-                                //System.out.println( "Storing child raster in cache. Position: " + Integer.toString(parallelPos) );
+                                //System.out.println( "Storing child raster in cache. Position: " + Integer.toString(pp) );
 				return r;
 			}
 
@@ -92,7 +98,12 @@ class FastGradientPaintContext implements PaintContext {
 					else raster.setDataElements( i, j, c );
 				}
 			}
-			childRasterCache = new HashMap();
+			childRasterCache = new LinkedHashMap<Integer, Raster>( 16, 0.75f, true ) {
+				private static final long serialVersionUID = 1L;
+				protected boolean removeEldestEntry( Map.Entry< Integer, Raster > eldest ) {
+					return size() > 64;
+				}
+			};
 		}
 	}
 
@@ -116,17 +127,19 @@ class FastGradientPaintContext implements PaintContext {
 			parallelDevicePos = r.x;
 			info.parallelLength = r.width;
 		}
-                recentInfos.remove( info );
-                recentInfos.add( 0, info );
-                if ( recentInfos.size() > 16 ) recentInfos.removeLast();
-		Object o = gradientCache.get( info );
-                if ( o != null ) o = ( ( java.lang.ref.WeakReference )o ).get();
-		if ( o != null ) {
-			gradient = (Gradient) o;
-		} else {
-			gradientCache.put( info, new java.lang.ref.WeakReference( gradient = new Gradient( info ) ) );
+                synchronized ( FastGradientPaintContext.class ) {
+                    recentInfos.remove( info );
+                    recentInfos.add( 0, info );
+                    if ( recentInfos.size() > 16 ) recentInfos.removeLast();
+                    Object o = gradientCache.get( info );
+                    if ( o != null ) o = ( ( java.lang.ref.WeakReference )o ).get();
+                    if ( o != null ) {
+                        gradient = (Gradient) o;
+                    } else {
+                        gradientCache.put( info, new java.lang.ref.WeakReference( gradient = new Gradient( info ) ) );
                         //System.out.println( "Storing gradient in cache. Info: " + info.toString() );
-		}
+                    }
+                }
 	}
 
 	public void dispose() {

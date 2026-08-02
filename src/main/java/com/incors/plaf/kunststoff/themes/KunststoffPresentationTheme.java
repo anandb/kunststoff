@@ -126,9 +126,9 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     public void addCustomEntriesToTable(UIDefaults table)
     {
         super.addCustomEntriesToTable(table);
-        UIManager.getDefaults().put("PasswordField.font", monospacedFont);
-        UIManager.getDefaults().put("TextArea.font", monospacedFont);
-        UIManager.getDefaults().put("TextPane.font", monospacedFont);
-        UIManager.getDefaults().put("EditorPane.font", monospacedFont);
+        table.put("PasswordField.font", monospacedFont);
+        table.put("TextArea.font", monospacedFont);
+        table.put("TextPane.font", monospacedFont);
+        table.put("EditorPane.font", monospacedFont);
     }
 }

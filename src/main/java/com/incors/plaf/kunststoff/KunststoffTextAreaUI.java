@@ -33,6 +33,9 @@ public class KunststoffTextAreaUI extends BasicTextAreaUI {
   protected void paintBackground(Graphics g) {
     super.paintBackground(g);
     Rectangle editorRect = getVisibleEditorRect();
+    if (editorRect == null) {
+      return;
+    }
 
     // paint upper gradient
     Color colorReflection = KunststoffLookAndFeel.getTextComponentGradientColorReflection();

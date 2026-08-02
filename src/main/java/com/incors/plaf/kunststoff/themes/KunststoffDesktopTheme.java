@@ -20,21 +20,22 @@ import javax.swing.border.EmptyBorder;
  */
 public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.KunststoffTheme {
 
-    private FontUIResource controlFont;
-    private FontUIResource menuFont;
-    private FontUIResource windowTitleFont;
-    private FontUIResource monospacedFont;
+    private final FontUIResource controlFont;
+    private final FontUIResource menuFont;
+    private final FontUIResource windowTitleFont;
+    private final FontUIResource monospacedFont;
 
     /**
      * Crates this Theme
      */
     public KunststoffDesktopTheme() {
-        menuFont = new FontUIResource("Segoe UI This", Font.PLAIN, 14);
-        controlFont = new FontUIResource("Segoe UI This", Font.PLAIN, 14);
-        windowTitleFont = new FontUIResource("Segoe UI This", Font.BOLD, 14);
+        menuFont = new FontUIResource("Fira Sans", Font.PLAIN, 16);
+        controlFont = new FontUIResource("Fira Sans", Font.PLAIN, 16);
+        windowTitleFont = new FontUIResource("Fira Sans", Font.BOLD, 16);
         monospacedFont = new FontUIResource("Hack", Font.PLAIN, 14);
     }
 
+    @Override
     public String getName() {
         return "Desktop";
     }
@@ -42,6 +43,7 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
     /**
      * The Font of Labels in many cases
      */
+    @Override
     public FontUIResource getControlTextFont() {
         return controlFont;
     }
@@ -49,6 +51,7 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
     /**
      * The Font of Menus and MenuItems
      */
+    @Override
     public FontUIResource getMenuTextFont() {
         return menuFont;
     }
@@ -56,6 +59,7 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
     /**
      * The Font of Nodes in JTrees
      */
+    @Override
     public FontUIResource getSystemTextFont() {
         return controlFont;
     }
@@ -63,6 +67,7 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
     /**
      * The Font in TextFields, EditorPanes, etc.
      */
+    @Override
     public FontUIResource getUserTextFont() {
         return controlFont;
     }
@@ -70,16 +75,18 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
     /**
      * The Font of the Title of JInternalFrames
      */
+    @Override
     public FontUIResource getWindowTitleFont() {
         return windowTitleFont;
     }
 
+    @Override
     public void addCustomEntriesToTable(UIDefaults table) {
         super.addCustomEntriesToTable(table);
-        UIManager.getDefaults().put("PasswordField.font", monospacedFont);
-        UIManager.getDefaults().put("TextArea.font", monospacedFont);
-        UIManager.getDefaults().put("TextPane.font", monospacedFont);
-        UIManager.getDefaults().put("EditorPane.font", monospacedFont);
+        table.put("PasswordField.font", monospacedFont);
+        table.put("TextArea.font", monospacedFont);
+        table.put("TextPane.font", monospacedFont);
+        table.put("EditorPane.font", monospacedFont);
 
         // 1. **MenuItem Insets:** This is the most common way to add vertical padding.
         // Insets: (top, left, bottom, right)
@@ -91,13 +98,13 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
         // 3. **Separator Height (if applicable):** You might also want to adjust separators.
 //    UIManager.getDefaults().put("MenuSeparator.height", 8); // Increase this for more space between groups.
         // 4. **Check/Radio Menu Items:** Apply the same change to these specific items as well.
-        UIManager.getDefaults().put("CheckBoxMenuItem.border", new EmptyBorder(8, 4, 8, 4));
-        UIManager.getDefaults().put("RadioButtonMenuItem.border", new EmptyBorder(8, 4, 8, 4));
+        table.put("CheckBoxMenuItem.border", new EmptyBorder(8, 4, 8, 4));
+        table.put("RadioButtonMenuItem.border", new EmptyBorder(8, 4, 8, 4));
 
         // --- Other potentially relevant keys (use with caution) ---
         // If 'contentMargins' doesn't work in your specific base L&F, you might need to try:
-        UIManager.getDefaults().put("MenuItem.border", new EmptyBorder(8, 4, 8, 4));
-        UIManager.getDefaults().put("Menu.margin", new Insets(8, 4, 8, 4));
-        UIManager.getDefaults().put("Menu.border", new EmptyBorder(8, 4, 8, 4));
+        table.put("MenuItem.border", new EmptyBorder(8, 4, 8, 4));
+        table.put("Menu.margin", new Insets(8, 4, 8, 4));
+        table.put("Menu.border", new EmptyBorder(8, 4, 8, 4));
     }
 }

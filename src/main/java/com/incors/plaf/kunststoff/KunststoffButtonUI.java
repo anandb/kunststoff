@@ -62,7 +62,7 @@ public class KunststoffButtonUI extends MetalButtonUI {
           KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, false);
         }
         if (cachedShadowFaded != null) {
-          rectShadow.setBounds(parent.getWidth()/2 - loc.x, 0, parent.getWidth(), parent.getHeight());
+          rectShadow.setBounds(parent.getWidth()/2 - loc.x, 0, parent.getWidth()/2, parent.getHeight());
           KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, false);
         }
       }

@@ -18,12 +18,13 @@ public class KunststoffTreeUI extends BasicTreeUI {
   private final ColorUIResource bgColor = new ColorUIResource(217, 208, 180);
 
   static {
-    try {
-      m_iconExpanded = new ImageIcon(KunststoffTreeUI.class.getResource("icons/treeex.gif"));
-      m_iconCollapsed = new ImageIcon(KunststoffTreeUI.class.getResource("icons/treecol.gif"));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    m_iconExpanded = loadIcon("icons/treeex.gif");
+    m_iconCollapsed = loadIcon("icons/treecol.gif");
+  }
+
+  private static ImageIcon loadIcon(String path) {
+    ImageIcon icon = new ImageIcon(KunststoffTreeUI.class.getResource(path));
+    return icon.getImage() != null ? icon : null;
   }
 
   public KunststoffTreeUI(JComponent c) {
@@ -46,6 +47,9 @@ public class KunststoffTreeUI extends BasicTreeUI {
                                 Insets insets, Rectangle bounds,
                                 TreePath path, int row, boolean isExpanded,
                                 boolean hasBeenExpanded, boolean isLeaf) {
+    if (isLeaf) {
+      return;
+    }
     if (isExpanded == true) {
       if (null != m_iconExpanded) {
         g.drawImage(m_iconExpanded.getImage(), bounds.x-17, bounds.y+4, null);

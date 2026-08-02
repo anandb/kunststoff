@@ -57,9 +57,12 @@ public class KunststoffComboBoxUI extends MetalComboBoxUI {
             jRenderer.setOpaque(false);
           }
         }
-        super.paintComponent(g);
-        if (isSetRendererOpaque) {
-          ((JComponent) renderer).setOpaque(true);
+        try {
+          super.paintComponent(g);
+        } finally {
+          if (isSetRendererOpaque) {
+            ((JComponent) renderer).setOpaque(true);
+          }
         }
       } else {
         super.paintComponent(g);

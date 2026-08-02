@@ -37,14 +37,15 @@ public class KunststoffTabbedPaneUI extends BasicTabbedPaneUI {
     Rectangle tabRect = rects[tabIndex];
 
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
-    Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
+    Color colorShadowFaded = colorShadow != null ? KunststoffUtilities.getTranslucentColor(colorShadow, 0) : null;
     Color colorReflection = KunststoffLookAndFeel.getComponentGradientColorReflection();
-    Color colorReflectionFaded = KunststoffUtilities.getTranslucentColor(colorReflection, 0);
+    Color colorReflectionFaded = colorReflection != null ? KunststoffUtilities.getTranslucentColor(colorReflection, 0) : null;
 
     // paint shadow that the selected tab throws on the next tab
     int selectedIndex = tabPane.getSelectedIndex();
     // the following statement was added by Jamie LaScolea as a bug fix. Thanks Jamie!
-    if (this.lastTabInRun(tabPane.getTabCount(), this.selectedRun) != selectedIndex ){
+    if (colorShadowFaded != null &&
+        this.lastTabInRun(tabPane.getTabCount(), this.selectedRun) != selectedIndex ){
       if (tabPlacement == JTabbedPane.TOP || tabPlacement == JTabbedPane.BOTTOM) {
         if (tabIndex == selectedIndex+1) {
           Rectangle gradientRect = new Rectangle((int) tabRect.getX(), (int) tabRect.getY(), SHADOW_WIDTH, (int) tabRect.getHeight());
@@ -59,15 +60,17 @@ public class KunststoffTabbedPaneUI extends BasicTabbedPaneUI {
     }
 
     if (tabPlacement == JTabbedPane.TOP) {
-      Rectangle gradientRect = new Rectangle((int) tabRect.getX(), (int) tabRect.getY(), (int) tabRect.getWidth(), (int) SHADOW_WIDTH);
-      KunststoffUtilities.drawGradient(g, colorReflection, colorReflectionFaded, gradientRect, true);
+      if (colorReflectionFaded != null) {
+        Rectangle gradientRect = new Rectangle((int) tabRect.getX(), (int) tabRect.getY(), (int) tabRect.getWidth(), (int) SHADOW_WIDTH);
+        KunststoffUtilities.drawGradient(g, colorReflection, colorReflectionFaded, gradientRect, true);
+      }
     } else if (tabPlacement == JTabbedPane.BOTTOM) {
-      if (tabIndex != selectedIndex) {
+      if (tabIndex != selectedIndex && colorShadowFaded != null) {
         Rectangle gradientRect = new Rectangle((int) tabRect.getX(), (int) tabRect.getY(), (int) tabRect.getWidth(), SHADOW_WIDTH);
         KunststoffUtilities.drawGradient(g, colorShadow, colorShadowFaded, gradientRect, true);
       }
     } else if (tabPlacement == JTabbedPane.RIGHT) {
-      if (tabIndex != selectedIndex) {
+      if (tabIndex != selectedIndex && colorShadowFaded != null) {
         Rectangle gradientRect = new Rectangle((int) tabRect.getX(), (int) tabRect.getY(), (int) SHADOW_WIDTH, (int) tabRect.getHeight());
         KunststoffUtilities.drawGradient(g, colorShadow, colorShadowFaded, gradientRect, false);
       }

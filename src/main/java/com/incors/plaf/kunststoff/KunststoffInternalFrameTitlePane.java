@@ -22,13 +22,17 @@ public class KunststoffInternalFrameTitlePane extends MetalInternalFrameTitlePan
     // paint reflection
     Color colorReflection = KunststoffLookAndFeel.getComponentGradientColorReflection();
     Color colorReflectionFaded = KunststoffUtilities.getTranslucentColor(colorReflection, 0);
-    Rectangle rectReflection = new Rectangle(0, 1, this.getWidth(), this.getHeight()/2);;
-    KunststoffUtilities.drawGradient(g, colorReflection, colorReflectionFaded, rectReflection, true);
+    if (colorReflectionFaded != null) {
+      Rectangle rectReflection = new Rectangle(0, 1, this.getWidth(), this.getHeight()/2);
+      KunststoffUtilities.drawGradient(g, colorReflection, colorReflectionFaded, rectReflection, true);
+    }
 
     // paint shadow
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
     Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-    Rectangle rectShadow = new Rectangle(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2+1);
-    KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rectShadow, true);
+    if (colorShadowFaded != null) {
+      Rectangle rectShadow = new Rectangle(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2+1);
+      KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rectShadow, true);
+    }
   }
 }

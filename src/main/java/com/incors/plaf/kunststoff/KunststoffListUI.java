@@ -21,6 +21,7 @@ public class KunststoffListUI extends BasicListUI {
     private int cachedHeight = -1;
     private Color cachedShadowColor = null;
     private int cachedShadow = -1;
+    private Color cachedBackgroundColor = null;
 
   public KunststoffListUI(JComponent list) {
     // this will be needed for the decision if a big gradient or a small shadow
@@ -47,6 +48,9 @@ public class KunststoffListUI extends BasicListUI {
       int shadow = KunststoffLookAndFeel.getBackgroundGradientShadow();
       if (colorBackground != null) {
         Rectangle clipBounds = g.getClipBounds();
+        if (clipBounds == null) {
+          clipBounds = new Rectangle(0, 0, c.getWidth(), c.getHeight());
+        }
         int currentWidth = c.getWidth();
         int currentHeight = c.getHeight();
         if (shadow == 0) {
@@ -57,12 +61,13 @@ public class KunststoffListUI extends BasicListUI {
           int green = colorBackground.getGreen();
           int blue = colorBackground.getBlue();
           Color colorShadow;
-          if (cachedShadowColor != null && cachedShadow == shadow) {
+          if (cachedShadowColor != null && cachedShadow == shadow && cachedBackgroundColor == colorBackground) {
             colorShadow = cachedShadowColor;
           } else {
             colorShadow = new Color(red>=shadow?red-shadow:0, green>=shadow?green-shadow:0, blue>=shadow?blue-shadow:0);
             cachedShadowColor = colorShadow;
             cachedShadow = shadow;
+            cachedBackgroundColor = colorBackground;
           }
 
           if (isToolkitTrueColor) {
@@ -102,8 +107,11 @@ public class KunststoffListUI extends BasicListUI {
       JComponent renderer = ((JComponent) cellRenderer);
       if (renderer.getBackground() instanceof ColorUIResource && renderer.isOpaque()) {
         renderer.setOpaque(false);
-        super.paintCell(g, row, rowBounds, cellRenderer, dataModel, selModel, leadIndex);
-        renderer.setOpaque(true);
+        try {
+          super.paintCell(g, row, rowBounds, cellRenderer, dataModel, selModel, leadIndex);
+        } finally {
+          renderer.setOpaque(true);
+        }
         return;
       }
     }

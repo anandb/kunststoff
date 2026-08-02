@@ -37,6 +37,7 @@ import javax.swing.plaf.*;
 import javax.swing.plaf.metal.*;
 import java.awt.AWTEvent;
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.MouseEvent;
@@ -56,14 +57,18 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
   static {
     System.setProperty("awt.useSystemAAFontSettings", "on");
     System.setProperty("sun.font.fontmanager", "sun.font.FontManager");
-    
-    Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+
+    if (!GraphicsEnvironment.isHeadless()) {
+      Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
       private long lastAllowedPressTime = 0;
       private Component lastComponent = null;
       private boolean lastWasConsumed = false;
 
       @Override
       public void eventDispatched(AWTEvent event) {
+        if (!(UIManager.getLookAndFeel() instanceof KunststoffLookAndFeel)) {
+          return;
+        }
         if (event instanceof MouseEvent) {
           MouseEvent me = (MouseEvent) event;
           Component c = me.getComponent();
@@ -93,15 +98,10 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
        * which causes highlight offset and missed clicks.
        */
       private boolean isPopupMenuComponent(Component c) {
-        while (c != null) {
-          if (c instanceof JPopupMenu || c instanceof JMenu) {
-            return true;
-          }
-          c = c.getParent();
-        }
-        return false;
+        return c instanceof JPopupMenu || c instanceof JMenu;
       }
     }, AWTEvent.MOUSE_EVENT_MASK);
+    }
   }
 
   public KunststoffLookAndFeel() {
@@ -227,18 +227,25 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
 
   // ******** getter methods for the gradient colors *********
 
+  private static GradientTheme getGradientTheme() {
+    if (gradientTheme == null) {
+      gradientTheme = new KunststoffGradientTheme();
+    }
+    return gradientTheme;
+  }
+
   /**
    * Returns the reflection color for a standard component (such as JButton).
    */
   public static ColorUIResource getComponentGradientColorReflection() {
-    return gradientTheme.getComponentGradientColorReflection();
+    return getGradientTheme().getComponentGradientColorReflection();
   }
 
   /**
    * Returns the shadow color for a standard component (such as JButton).
    */
   public static ColorUIResource getComponentGradientColorShadow() {
-    return gradientTheme.getComponentGradientColorShadow();
+    return getGradientTheme().getComponentGradientColorShadow();
   }
 
 
@@ -246,14 +253,14 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
    * Returns the reflection color for a text component (such as JTextField).
    */
   public static ColorUIResource getTextComponentGradientColorReflection() {
-    return gradientTheme.getTextComponentGradientColorReflection();
+    return getGradientTheme().getTextComponentGradientColorReflection();
   }
 
   /**
    * Returns the reflection color for a text component (such as JTextField).
    */
   public static ColorUIResource getTextComponentGradientColorShadow() {
-    return gradientTheme.getTextComponentGradientColorShadow();
+    return getGradientTheme().getTextComponentGradientColorShadow();
   }
 
   /**
@@ -261,7 +268,7 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
    * use this color for the background of JTree.
    */
   public static int getBackgroundGradientShadow() {
-    return gradientTheme.getBackgroundGradientShadow();
+    return getGradientTheme().getBackgroundGradientShadow();
   }
 
 

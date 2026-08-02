@@ -33,6 +33,7 @@ public class KunststoffInternalFrameUI extends MetalInternalFrameUI {
 
   public void installUI(JComponent c) {
     paletteListener = new PaletteListener();
+    c.removePropertyChangeListener(paletteListener); // idempotent on re-install
     c.addPropertyChangeListener(paletteListener);
 
     super.installUI(c);

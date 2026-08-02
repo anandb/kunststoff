@@ -26,6 +26,7 @@ public class KunststoffUtilities {
   private static Color cachedGradientColor1_v2 = null;
   private static Color cachedGradientColor2_v2 = null;
   private static Boolean cachedGradientVertical_v2 = null;
+  private static Rectangle cachedGradientRect2 = null;
 
   /**
    * Convenience method to create a translucent <code>Color</color>.
@@ -80,8 +81,14 @@ public class KunststoffUtilities {
     Graphics2D g2D = (Graphics2D) g;
     GradientPaint gradient;
 
+    // A zero-size rect would create a degenerate GradientPaint with coincident
+    // anchor points, which throws IllegalArgumentException during paint.
+    if (rect.width <= 0 || rect.height <= 0) {
+      return;
+    }
+
     Boolean isVert = isVertical ? Boolean.TRUE : Boolean.FALSE;
-    if (cachedGradientColor1_v2 == color1 && cachedGradientColor2_v2 == color2 && cachedGradientVertical_v2 == isVert) {
+    if (cachedGradientColor1_v2 == color1 && cachedGradientColor2_v2 == color2 && cachedGradientVertical_v2 == isVert && cachedGradientRect2 != null && cachedGradientRect2.equals(rect)) {
       gradient = cachedGradientPaint2;
     } else {
       if (isVertical) {
@@ -93,6 +100,7 @@ public class KunststoffUtilities {
       cachedGradientColor1_v2 = color1;
       cachedGradientColor2_v2 = color2;
       cachedGradientVertical_v2 = isVert;
+      cachedGradientRect2 = new Rectangle(rect);
     }
     g2D.setPaint(gradient);
     g2D.fill(rect);
@@ -110,6 +118,9 @@ public class KunststoffUtilities {
 
     public static void resize(JComponent c) {
         Font font = c.getFont();
+        if (font == null) {
+            return;
+        }
         FontMetrics fontMetrics = fontMetricsCache.get(font);
         if (fontMetrics == null) {
             fontMetrics = c.getFontMetrics(font);

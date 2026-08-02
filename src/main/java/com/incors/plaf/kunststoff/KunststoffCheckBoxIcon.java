@@ -26,7 +26,7 @@ public class KunststoffCheckBoxIcon extends MetalCheckBoxIcon {
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
     if (colorShadow != null) {
       Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-      Rectangle rect = new Rectangle(x, x+controlSize/2, controlSize, controlSize/2);
+      Rectangle rect = new Rectangle(x, y+controlSize/2, controlSize, controlSize/2);
       KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rect, true);
     }
 

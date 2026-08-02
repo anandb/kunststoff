@@ -28,7 +28,7 @@ public class KunststoffScrollButton extends MetalScrollButton {
     super.paint(g);
     int width = getWidth();
     int height = getHeight();
-    boolean isVertical = (getDirection() == EAST || getDirection() == WEST);
+    boolean isVertical = (getDirection() == NORTH || getDirection() == SOUTH);
 
     Color colorReflection = KunststoffLookAndFeel.getComponentGradientColorReflection();
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
