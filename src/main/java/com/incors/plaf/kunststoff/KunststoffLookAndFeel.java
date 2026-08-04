@@ -35,12 +35,6 @@ import com.incors.plaf.kunststoff.themes.KunststoffDesktopTheme;
 import javax.swing.*;
 import javax.swing.plaf.*;
 import javax.swing.plaf.metal.*;
-import java.awt.AWTEvent;
-import java.awt.Component;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
-import java.awt.event.AWTEventListener;
-import java.awt.event.MouseEvent;
 
 import com.incors.plaf.kunststoff.themes.KunststoffPresentationTheme;
 
@@ -57,51 +51,6 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
   static {
     System.setProperty("awt.useSystemAAFontSettings", "on");
     System.setProperty("sun.font.fontmanager", "sun.font.FontManager");
-
-    if (!GraphicsEnvironment.isHeadless()) {
-      Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
-      private long lastAllowedPressTime = 0;
-      private Component lastComponent = null;
-      private boolean lastWasConsumed = false;
-
-      @Override
-      public void eventDispatched(AWTEvent event) {
-        if (!(UIManager.getLookAndFeel() instanceof KunststoffLookAndFeel)) {
-          return;
-        }
-        if (event instanceof MouseEvent) {
-          MouseEvent me = (MouseEvent) event;
-          Component c = me.getComponent();
-          if (isPopupMenuComponent(c)) {
-            if (me.getID() == MouseEvent.MOUSE_PRESSED) {
-              long currentTime = System.currentTimeMillis();
-              if (c == lastComponent && (currentTime - lastAllowedPressTime) < 600) {
-                me.consume();
-                lastWasConsumed = true;
-                return;
-              }
-              lastAllowedPressTime = currentTime;
-              lastComponent = c;
-              lastWasConsumed = false;
-            } else if (me.getID() == MouseEvent.MOUSE_RELEASED || me.getID() == MouseEvent.MOUSE_CLICKED) {
-              if (c == lastComponent && lastWasConsumed) {
-                me.consume();
-              }
-            }
-          }
-        }
-      }
-
-      /**
-       * Only intercept events on JPopupMenu and JMenu (not JMenuItem or JComboBox)
-       * to avoid consuming mouse presses on combo-box popup lists and menu items,
-       * which causes highlight offset and missed clicks.
-       */
-      private boolean isPopupMenuComponent(Component c) {
-        return c instanceof JPopupMenu || c instanceof JMenu;
-      }
-    }, AWTEvent.MOUSE_EVENT_MASK);
-    }
   }
 
   public KunststoffLookAndFeel() {
