@@ -11,7 +11,7 @@ import javax.swing.text.*;
 
 public class KunststoffPasswordFieldUI extends KunststoffTextFieldUI {
 
-  KunststoffPasswordFieldUI(JComponent c) {
+  public KunststoffPasswordFieldUI(JComponent c) {
     super(c);
   }
 
@@ -19,11 +19,13 @@ public class KunststoffPasswordFieldUI extends KunststoffTextFieldUI {
     return new KunststoffPasswordFieldUI(c);
   }
 
+  @Override
   protected String getPropertyPrefix() {
     return "PasswordField";
   }
 
 
+  @Override
   public View create(Element elem) {
     return new PasswordView(elem);
   }

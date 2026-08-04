@@ -42,13 +42,15 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     public KunststoffPresentationTheme()
     {
         String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();
+        String monoFontName = com.incors.plaf.kunststoff.KunststoffUtilities.getMonospaceFontName();
         menuFont = new FontUIResource(fontName,Font.PLAIN, 17);
         controlFont = new FontUIResource(fontName,Font.PLAIN, 16);
         textFont = new FontUIResource(fontName,Font.PLAIN, 14);
         windowTitleFont =  new FontUIResource(fontName, Font.BOLD, 17);
-        monospacedFont = new FontUIResource("Hack", Font.PLAIN, 15);
+        monospacedFont = new FontUIResource(monoFontName, Font.PLAIN, 15);
     }
 
+    @Override
     public String getName()
     {
         return "Presentation";
@@ -57,6 +59,7 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     /**
      * The Font of Labels in many cases
      */
+    @Override
     public FontUIResource getControlTextFont()
     {
         return controlFont;
@@ -65,6 +68,7 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     /**
      * The Font of Menus and MenuItems
      */
+    @Override
     public FontUIResource getMenuTextFont()
     {
         return menuFont;
@@ -73,6 +77,7 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     /**
      * The Font of Nodes in JTrees
      */
+    @Override
     public FontUIResource getSystemTextFont()
     {
         return controlFont;
@@ -81,6 +86,7 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     /**
      * The Font in TextFields, EditorPanes, etc.
      */
+    @Override
     public FontUIResource getUserTextFont()
     {
         return textFont;
@@ -89,41 +95,49 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     /**
      * The Font of the Title of JInternalFrames
      */
+    @Override
     public FontUIResource getWindowTitleFont()
     {
         return windowTitleFont;
     }
 
+    @Override
     public ColorUIResource getPrimary1()
     {
         return primary1;
     }
 
+    @Override
     public ColorUIResource getPrimary2()
     {
         return primary2;
     }
 
+    @Override
     public ColorUIResource getPrimary3()
     {
         return primary3;
     }
 
+    @Override
     public ColorUIResource getSecondary1()
     {
         return secondary1;
     }
 
+    @Override
     public ColorUIResource getSecondary2()
     {
         return secondary2;
     }
 
+    @Override
     public ColorUIResource getSecondary3()
     {
         return secondary3;
     }
 
+    @Override
     public void addCustomEntriesToTable(UIDefaults table)
     {
         super.addCustomEntriesToTable(table);

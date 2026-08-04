@@ -24,6 +24,7 @@ public class KunststoffScrollButton extends MetalScrollButton {
    * Calls the super classes paint(Graphics g) method and then paints two gradients.
    * The direction of the gradients depends on the direction of the scrollbar.
    */
+  @Override
   public void paint(Graphics g) {
     super.paint(g);
     int width = getWidth();
@@ -44,10 +45,10 @@ public class KunststoffScrollButton extends MetalScrollButton {
 
     if (isVertical) {
       rectReflection.setBounds(1, 1, width, height/2);
-      rectShadow.setBounds(1, height/2, width, height/2+1);
+      rectShadow.setBounds(1, height/2, width, height - height/2);
     } else {
       rectReflection.setBounds(1, 1, width/2, height);
-      rectShadow.setBounds(width/2, 1, width/2+1, height);
+      rectShadow.setBounds(width/2, 1, width - width/2, height);
     }
 
     if (cachedReflectionFaded != null) {

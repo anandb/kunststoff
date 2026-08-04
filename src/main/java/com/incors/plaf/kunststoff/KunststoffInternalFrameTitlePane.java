@@ -16,6 +16,7 @@ public class KunststoffInternalFrameTitlePane extends MetalInternalFrameTitlePan
     super(frame);
   }
 
+  @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
@@ -31,7 +32,7 @@ public class KunststoffInternalFrameTitlePane extends MetalInternalFrameTitlePan
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
     Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
     if (colorShadowFaded != null) {
-      Rectangle rectShadow = new Rectangle(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2+1);
+      Rectangle rectShadow = new Rectangle(0, this.getHeight()/2, this.getWidth(), this.getHeight() - this.getHeight()/2);
       KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rectShadow, true);
     }
   }

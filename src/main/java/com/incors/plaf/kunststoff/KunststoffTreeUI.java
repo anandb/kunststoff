@@ -43,6 +43,7 @@ public class KunststoffTreeUI extends BasicTreeUI {
 
 
   // This method replaces the metal expand-/collaps-icons with some nicer ones.
+  @Override
   protected void paintExpandControl(Graphics g, Rectangle clipBounds,
                                 Insets insets, Rectangle bounds,
                                 TreePath path, int row, boolean isExpanded,

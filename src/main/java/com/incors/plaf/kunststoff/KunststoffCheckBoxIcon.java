@@ -10,6 +10,7 @@ import javax.swing.plaf.metal.*;
 
 public class KunststoffCheckBoxIcon extends MetalCheckBoxIcon {
 
+  @Override
   public void paintIcon(Component c, Graphics g, int x, int y) {
     super.paintIcon(c, g, x, y);
 
@@ -26,7 +27,7 @@ public class KunststoffCheckBoxIcon extends MetalCheckBoxIcon {
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
     if (colorShadow != null) {
       Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-      Rectangle rect = new Rectangle(x, y+controlSize/2, controlSize, controlSize/2);
+      Rectangle rect = new Rectangle(x, y+controlSize/2, controlSize, controlSize - controlSize/2);
       KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rect, true);
     }
 

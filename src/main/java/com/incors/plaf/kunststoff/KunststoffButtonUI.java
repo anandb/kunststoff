@@ -23,6 +23,7 @@ public class KunststoffButtonUI extends MetalButtonUI {
     return buttonUI;
   }
 
+  @Override
   public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
 
@@ -53,7 +54,7 @@ public class KunststoffButtonUI extends MetalButtonUI {
           KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, true);
         }
         if (cachedShadowFaded != null) {
-          rectShadow.setBounds(0, parent.getHeight()/2 - loc.y, parent.getWidth(), parent.getHeight()/2);
+          rectShadow.setBounds(0, parent.getHeight()/2 - loc.y, parent.getWidth(), parent.getHeight() - parent.getHeight()/2);
           KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, true);
         }
       } else {
@@ -62,7 +63,7 @@ public class KunststoffButtonUI extends MetalButtonUI {
           KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, false);
         }
         if (cachedShadowFaded != null) {
-          rectShadow.setBounds(parent.getWidth()/2 - loc.x, 0, parent.getWidth()/2, parent.getHeight());
+          rectShadow.setBounds(parent.getWidth()/2 - loc.x, 0, parent.getWidth() - parent.getWidth()/2, parent.getHeight());
           KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, false);
         }
       }
@@ -72,7 +73,7 @@ public class KunststoffButtonUI extends MetalButtonUI {
         KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, true);
       }
       if (cachedShadowFaded != null) {
-        rectShadow.setBounds(0, c.getHeight()/2, c.getWidth(), c.getHeight()/2);
+        rectShadow.setBounds(0, c.getHeight()/2, c.getWidth(), c.getHeight() - c.getHeight()/2);
         KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, true);
       }
     }

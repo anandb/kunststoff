@@ -20,6 +20,7 @@ public class KunststoffTabbedPaneUI extends BasicTabbedPaneUI {
     return new KunststoffTabbedPaneUI();
   }
 
+  @Override
   protected void installDefaults() {
     super.installDefaults();
     tabPane.setBackground(bgColor);
@@ -29,6 +30,7 @@ public class KunststoffTabbedPaneUI extends BasicTabbedPaneUI {
    * Thanks to a contribution by Jamie LaScolea this method now works with
    * multiple rows of tabs.
    */
+  @Override
   protected void paintTab(Graphics g, int tabPlacement,
                             Rectangle[] rects, int tabIndex,
                             Rectangle iconRect, Rectangle textRect) {
@@ -77,6 +79,7 @@ public class KunststoffTabbedPaneUI extends BasicTabbedPaneUI {
     }
   }
 
+  @Override
   protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex,
                                       int x, int y, int w, int h, boolean isSelected ) {
     if ( isSelected ) {

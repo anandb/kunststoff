@@ -23,6 +23,7 @@ public class KunststoffToolBarUI extends MetalToolBarUI {
     return new KunststoffToolBarUI();
   }
 
+  @Override
   public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
 
@@ -32,47 +33,35 @@ public class KunststoffToolBarUI extends MetalToolBarUI {
       orientation = ((JToolBar) c).getOrientation();
     }
 
+    Color colorReflection = KunststoffLookAndFeel.getComponentGradientColorReflection();
+    Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
+
+    if (cachedReflectionColor != colorReflection) {
+      cachedReflectionColor = colorReflection;
+      cachedReflectionFaded = colorReflection != null ? KunststoffUtilities.getTranslucentColor(colorReflection, 0) : null;
+    }
+    if (cachedShadowColor != colorShadow) {
+      cachedShadowColor = colorShadow;
+      cachedShadowFaded = colorShadow != null ? KunststoffUtilities.getTranslucentColor(colorShadow, 0) : null;
+    }
+
     if (orientation == SwingConstants.HORIZONTAL) {
-      Color colorReflection = KunststoffLookAndFeel.getComponentGradientColorReflection();
-      Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
-
-      if (cachedReflectionColor != colorReflection) {
-        cachedReflectionColor = colorReflection;
-        cachedReflectionFaded = colorReflection != null ? KunststoffUtilities.getTranslucentColor(colorReflection, 0) : null;
-      }
-      if (cachedShadowColor != colorShadow) {
-        cachedShadowColor = colorShadow;
-        cachedShadowFaded = colorShadow != null ? KunststoffUtilities.getTranslucentColor(colorShadow, 0) : null;
-      }
-
       if (cachedReflectionFaded != null) {
         rectReflection.setBounds(0, 0, c.getWidth(), c.getHeight()/2);
         KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, true);
       }
       if (cachedShadowFaded != null) {
-        rectShadow.setBounds(0, c.getHeight()/2, c.getWidth(), c.getHeight()/2);
+        rectShadow.setBounds(0, c.getHeight()/2, c.getWidth(), c.getHeight() - c.getHeight()/2);
         KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, true);
       }
 
     } else {
-      Color colorReflection = KunststoffLookAndFeel.getComponentGradientColorReflection();
-      Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
-
-      if (cachedReflectionColor != colorReflection) {
-        cachedReflectionColor = colorReflection;
-        cachedReflectionFaded = colorReflection != null ? KunststoffUtilities.getTranslucentColor(colorReflection, 0) : null;
-      }
-      if (cachedShadowColor != colorShadow) {
-        cachedShadowColor = colorShadow;
-        cachedShadowFaded = colorShadow != null ? KunststoffUtilities.getTranslucentColor(colorShadow, 0) : null;
-      }
-
       if (cachedReflectionFaded != null) {
         rectReflection.setBounds(0, 0, c.getWidth()/2, c.getHeight());
         KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, false);
       }
       if (cachedShadowFaded != null) {
-        rectShadow.setBounds(c.getWidth()/2, 0, c.getWidth()/2, c.getHeight());
+        rectShadow.setBounds(c.getWidth()/2, 0, c.getWidth() - c.getWidth()/2, c.getHeight());
         KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, false);
       }
     }

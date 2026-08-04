@@ -28,6 +28,7 @@ public class KunststoffProgressBarUI extends BasicProgressBarUI {
       return new KunststoffProgressBarUI();
   }
 
+  @Override
   public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
 
@@ -50,7 +51,7 @@ public class KunststoffProgressBarUI extends BasicProgressBarUI {
         KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, true);
       }
       if (cachedShadowFaded != null) {
-        rectShadow.setBounds(0, c.getHeight()/2, c.getWidth(), c.getHeight()/2);
+        rectShadow.setBounds(0, c.getHeight()/2, c.getWidth(), c.getHeight() - c.getHeight()/2);
         KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, true);
       }
     } else {
@@ -59,7 +60,7 @@ public class KunststoffProgressBarUI extends BasicProgressBarUI {
         KunststoffUtilities.drawGradient(g, colorReflection, cachedReflectionFaded, rectReflection, false);
       }
       if (cachedShadowFaded != null) {
-        rectShadow.setBounds(c.getWidth()/2, 0, c.getWidth()/2, c.getHeight());
+        rectShadow.setBounds(c.getWidth()/2, 0, c.getWidth() - c.getWidth()/2, c.getHeight());
         KunststoffUtilities.drawGradient(g, cachedShadowFaded, colorShadow, rectShadow, false);
       }
     }

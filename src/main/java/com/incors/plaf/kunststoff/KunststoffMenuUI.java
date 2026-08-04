@@ -19,6 +19,7 @@ public class KunststoffMenuUI extends BasicMenuUI {
     return new KunststoffMenuUI();
   }
 
+  @Override
   public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
     Container parent = menuItem.getParent();
@@ -38,8 +39,8 @@ public class KunststoffMenuUI extends BasicMenuUI {
       Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
       if (colorShadow != null) {
         Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-        Rectangle drawRect = new Rectangle(0, parent.getHeight()/2, parent.getWidth(), parent.getHeight()/2);
-        Rectangle gradRect = new Rectangle(0, parent.getHeight()/2-loc.y, parent.getWidth(), parent.getHeight()/2);
+        Rectangle drawRect = new Rectangle(0, parent.getHeight()/2, parent.getWidth(), parent.getHeight() - parent.getHeight()/2);
+        Rectangle gradRect = new Rectangle(0, parent.getHeight()/2-loc.y, parent.getWidth(), parent.getHeight() - parent.getHeight()/2);
         KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, drawRect, gradRect, true);
       }
     }

@@ -31,6 +31,7 @@ public class KunststoffInternalFrameUI extends MetalInternalFrameUI {
     return new KunststoffInternalFrameUI((JInternalFrame)c);
   }
 
+  @Override
   public void installUI(JComponent c) {
     paletteListener = new PaletteListener();
     c.removePropertyChangeListener(paletteListener); // idempotent on re-install
@@ -39,27 +40,30 @@ public class KunststoffInternalFrameUI extends MetalInternalFrameUI {
     super.installUI(c);
   }
 
+  @Override
   public void uninstallUI(JComponent c) {
     c.removePropertyChangeListener(paletteListener);
     super.uninstallUI(c);
   }
 
+  @Override
   protected JComponent createNorthPane(JInternalFrame w) {
     super.createNorthPane(w);
     titlePane = new KunststoffInternalFrameTitlePane(w);
     return titlePane;
   }
 
+  @Override
   public void setPalette(boolean isPalette) {
     super.setPalette(isPalette);
     titlePane.setPalette(isPalette);
   }
 
   private void setFrameType(String frameType) {
-    if (frameType.equals(OPTION_DIALOG)) {
+    if (OPTION_DIALOG.equals(frameType)) {
       LookAndFeel.installBorder(frame, "InternalFrame.optionDialogBorder");
       titlePane.setPalette(false);
-    } else if (frameType.equals(PALETTE_FRAME)) {
+    } else if (PALETTE_FRAME.equals(frameType)) {
       LookAndFeel.installBorder(frame, "InternalFrame.paletteBorder");
       titlePane.setPalette(true);
     } else {
@@ -69,6 +73,7 @@ public class KunststoffInternalFrameUI extends MetalInternalFrameUI {
   }
 
   class PaletteListener implements PropertyChangeListener {
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
       String name = e.getPropertyName();
 

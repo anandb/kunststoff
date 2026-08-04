@@ -18,6 +18,7 @@ public class KunststoffTableHeaderUI extends BasicTableHeaderUI {
     return new KunststoffTableHeaderUI();
   }
 
+  @Override
   public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
 
@@ -37,7 +38,7 @@ public class KunststoffTableHeaderUI extends BasicTableHeaderUI {
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
     if (colorShadow != null) {
       Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-      Rectangle rect = new Rectangle(0, c.getHeight()/2, c.getWidth(), c.getHeight()/2);
+      Rectangle rect = new Rectangle(0, c.getHeight()/2, c.getWidth(), c.getHeight() - c.getHeight()/2);
       KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rect, true);
     }
   }

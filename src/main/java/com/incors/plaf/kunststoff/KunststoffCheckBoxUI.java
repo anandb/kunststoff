@@ -14,18 +14,21 @@ import javax.swing.plaf.metal.*;
  */
 public class KunststoffCheckBoxUI extends MetalCheckBoxUI {
   private final static KunststoffCheckBoxUI checkBoxUI = new KunststoffCheckBoxUI();
+  // The icon is stateless and shared across all checkbox instances.
+  private final static KunststoffCheckBoxIcon checkBoxIcon = new KunststoffCheckBoxIcon();
 
   public KunststoffCheckBoxUI() {
-    icon = new KunststoffCheckBoxIcon();
+    icon = checkBoxIcon;
   }
 
   public static ComponentUI createUI(JComponent b) {
     return checkBoxUI;
   }
 
+  @Override
   public void installDefaults(AbstractButton b) {
     super.installDefaults(b);
-    icon = new KunststoffCheckBoxIcon();
+    icon = checkBoxIcon;
   }
 
 }

@@ -6,11 +6,11 @@ package com.incors.plaf.kunststoff;
  */
 
 import java.awt.*;
-import java.util.WeakHashMap;
 
 import com.incors.plaf.*;
 
 import javax.swing.JComponent;
+import javax.swing.plaf.ColorUIResource;
 
 /**
  * Collection of methods often used in the Kunststoff Look&Feel
@@ -50,14 +50,14 @@ public class KunststoffUtilities {
     } else if (alpha == 255) {
       return color;
     } else {
-      return new ColorUIResource2(color.getRed(), color.getGreen(), color.getBlue(), alpha);
+      return new ColorUIResource(new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha));
     }
   }
 
   /**
    * Convenience method to draw a gradient on the specified rectangle
    */
-  public static void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, boolean isVertical) {
+  public static synchronized void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, boolean isVertical) {
     Graphics2D g2D = (Graphics2D) g;
     FastGradientPaint gradient;
     if (cachedGradientColor1 == color1 && cachedGradientColor2 == color2 && cachedGradientVertical == isVertical) {
@@ -77,7 +77,7 @@ public class KunststoffUtilities {
    * Convenience method to draw a gradient. The first rectangle defines the drawing region,
    * the second rectangle defines the size of the gradient.
    */
-  public static void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, Rectangle rect2, boolean isVertical) {
+  public static synchronized void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, Rectangle rect2, boolean isVertical) {
     Graphics2D g2D = (Graphics2D) g;
     GradientPaint gradient;
 
@@ -114,18 +114,15 @@ public class KunststoffUtilities {
     return pixelsize >= 24;
   }
 
-    private static final WeakHashMap<Font, FontMetrics> fontMetricsCache = new WeakHashMap<>();
-
     public static void resize(JComponent c) {
         Font font = c.getFont();
         if (font == null) {
             return;
         }
-        FontMetrics fontMetrics = fontMetricsCache.get(font);
-        if (fontMetrics == null) {
-            fontMetrics = c.getFontMetrics(font);
-            fontMetricsCache.put(font, fontMetrics);
-        }
+        // Metrics are resolved against the component's own Graphics/font
+        // context, so they remain correct across DPI/scale changes. Do not
+        // cache globally by Font: metrics are tied to the rendering context.
+        FontMetrics fontMetrics = c.getFontMetrics(font);
         Dimension current = c.getPreferredSize();
         double h = current.getHeight();
         if (h < 2 * fontMetrics.getHeight()) {
@@ -133,36 +130,85 @@ public class KunststoffUtilities {
         }
     }
 
+    private static String cachedDefaultFontName = null;
+    private static String cachedMonospaceFontName = null;
+
     /**
-     * Get the default font name from the environment, system properties, or fallback to Segoe UI or Fira Sans.
+     * Names of preferred monospaced fonts, in order of preference. The first one
+     * found installed on the running system is used. The logical font
+     * "Monospaced" is a guaranteed fallback on every Java platform.
+     */
+    private static final String[] PREFERRED_MONOSPACED_FONTS = {
+        "Fira Code", "Monaco", "Consolas", "Droid Sans Mono", "Hack"
+    };
+
+    private static boolean[] fontFamilyAvailable(String[] candidates) {
+        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        boolean[] available = new boolean[candidates.length];
+        for (int i = 0; i < candidates.length; i++) {
+            for (String f : fonts) {
+                if (candidates[i].equalsIgnoreCase(f)) {
+                    available[i] = true;
+                    break;
+                }
+            }
+        }
+        return available;
+    }
+
+    /**
+     * Get the default (proportional) font name from the environment, system
+     * properties, or fallback to Segoe UI, Fira Sans, or the logical SansSerif.
+     * The result is cached because enumerating installed fonts is expensive.
      */
     public static String getDefaultFontName() {
+        if (cachedDefaultFontName != null) {
+            return cachedDefaultFontName;
+        }
         String fontName = System.getenv("KUNSTSTOFF_FONT");
         if (fontName == null || fontName.trim().isEmpty()) {
             fontName = System.getProperty("kunststoff.font");
         }
-        
+
         if (fontName != null && !fontName.trim().isEmpty()) {
-            return fontName.trim();
+            cachedDefaultFontName = fontName.trim();
+            return cachedDefaultFontName;
         }
-        
-        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        boolean hasSegoe = false;
-        boolean hasFira = false;
-        for (String f : fonts) {
-            if ("Segoe UI".equalsIgnoreCase(f)) {
-                hasSegoe = true;
-            } else if ("Fira Sans".equalsIgnoreCase(f)) {
-                hasFira = true;
+
+        boolean[] available = fontFamilyAvailable(new String[] {"Segoe UI", "Fira Sans"});
+        if (available[0]) {
+            cachedDefaultFontName = "Segoe UI";
+        } else if (available[1]) {
+            cachedDefaultFontName = "Fira Sans";
+        } else {
+            cachedDefaultFontName = "SansSerif";
+        }
+        return cachedDefaultFontName;
+    }
+
+    /**
+     * Get the name of the monospaced font. Checks KUNSTSTOFF_MONOSPACE_FONT
+     * environment variable first, then falls back to the first preferred font
+     * found installed, then to the logical font "Monospaced". The result is
+     * cached because enumerating installed fonts is expensive.
+     */
+    public static String getMonospaceFontName() {
+        if (cachedMonospaceFontName != null) {
+            return cachedMonospaceFontName;
+        }
+        String envFont = System.getenv("KUNSTSTOFF_MONOSPACE_FONT");
+        if (envFont != null && !envFont.trim().isEmpty()) {
+            cachedMonospaceFontName = envFont.trim();
+            return cachedMonospaceFontName;
+        }
+        boolean[] available = fontFamilyAvailable(PREFERRED_MONOSPACED_FONTS);
+        for (int i = 0; i < PREFERRED_MONOSPACED_FONTS.length; i++) {
+            if (available[i]) {
+                cachedMonospaceFontName = PREFERRED_MONOSPACED_FONTS[i];
+                return cachedMonospaceFontName;
             }
         }
-        
-        if (hasSegoe) {
-            return "Segoe UI";
-        } else if (hasFira) {
-            return "Fira Sans";
-        }
-        
-        return "SansSerif";
+        cachedMonospaceFontName = "Monospaced";
+        return cachedMonospaceFontName;
     }
 }

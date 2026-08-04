@@ -40,12 +40,14 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
      */
     public KunststoffNotebookTheme() {
         String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();
+        String monoFontName = com.incors.plaf.kunststoff.KunststoffUtilities.getMonospaceFontName();
         menuFont = new FontUIResource(fontName, Font.PLAIN, 12);
         controlFont = new FontUIResource(fontName, Font.PLAIN, 11);
         windowTitleFont = new FontUIResource(fontName, Font.BOLD, 12);
-        monospacedFont = new FontUIResource("Hack", Font.PLAIN, 11);
+        monospacedFont = new FontUIResource(monoFontName, Font.PLAIN, 11);
     }
 
+    @Override
     public String getName() {
         return "Notebook";
     }
@@ -53,6 +55,7 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
     /**
      * The Font of Labels in many cases
      */
+    @Override
     public FontUIResource getControlTextFont() {
         return controlFont;
     }
@@ -60,6 +63,7 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
     /**
      * The Font of Menus and MenuItems
      */
+    @Override
     public FontUIResource getMenuTextFont() {
         return menuFont;
     }
@@ -67,6 +71,7 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
     /**
      * The Font of Nodes in JTrees
      */
+    @Override
     public FontUIResource getSystemTextFont() {
         return controlFont;
     }
@@ -74,6 +79,7 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
     /**
      * The Font in TextFields, EditorPanes, etc.
      */
+    @Override
     public FontUIResource getUserTextFont() {
         return controlFont;
     }
@@ -81,34 +87,42 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
     /**
      * The Font of the Title of JInternalFrames
      */
+    @Override
     public FontUIResource getWindowTitleFont() {
         return windowTitleFont;
     }
 
+    @Override
     public ColorUIResource getPrimary1() {
         return primary1;
     }
 
+    @Override
     public ColorUIResource getPrimary2() {
         return primary2;
     }
 
+    @Override
     public ColorUIResource getPrimary3() {
         return primary3;
     }
 
+    @Override
     public ColorUIResource getSecondary1() {
         return secondary1;
     }
 
+    @Override
     public ColorUIResource getSecondary2() {
         return secondary2;
     }
 
+    @Override
     public ColorUIResource getSecondary3() {
         return secondary3;
     }
 
+    @Override
     public void addCustomEntriesToTable(UIDefaults table) {
         super.addCustomEntriesToTable(table);
         table.put("PasswordField.font", monospacedFont);

@@ -21,11 +21,13 @@ public class KunststoffScrollBarUI extends MetalScrollBarUI {
     return new KunststoffScrollBarUI();
   }
 
+  @Override
   protected JButton createDecreaseButton(int orientation) {
     decreaseButton = new KunststoffScrollButton(orientation, scrollBarWidth, isFreeStanding);
     return decreaseButton;
   }
 
+  @Override
   protected JButton createIncreaseButton(int orientation) {
     increaseButton =  new KunststoffScrollButton(orientation, scrollBarWidth, isFreeStanding);
     return increaseButton;
@@ -36,6 +38,7 @@ public class KunststoffScrollBarUI extends MetalScrollBarUI {
    * Calls the super classes paint(Graphics g) method and then paints two gradients.
    * The direction of the gradients depends on the direction of the scrollbar.
    */
+  @Override
   protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
     super.paintThumb(g, c, thumbBounds);
 
@@ -54,10 +57,10 @@ public class KunststoffScrollBarUI extends MetalScrollBarUI {
     Rectangle rectShadow;
     if (scrollbar.getOrientation() == JScrollBar.VERTICAL) {
       rectReflection = new Rectangle(thumbBounds.x+1, thumbBounds.y, thumbBounds.width/2, thumbBounds.height);
-      rectShadow = new Rectangle(thumbBounds.x + thumbBounds.width/2, thumbBounds.y, thumbBounds.width/2+1, thumbBounds.height);
+      rectShadow = new Rectangle(thumbBounds.x + thumbBounds.width/2, thumbBounds.y, thumbBounds.width - thumbBounds.width/2, thumbBounds.height);
     } else {
       rectReflection = new Rectangle(thumbBounds.x, thumbBounds.y+1, thumbBounds.width, thumbBounds.height/2);
-      rectShadow = new Rectangle(thumbBounds.x, thumbBounds.y + thumbBounds.height/2, thumbBounds.width, thumbBounds.height/2+1);
+      rectShadow = new Rectangle(thumbBounds.x, thumbBounds.y + thumbBounds.height/2, thumbBounds.width, thumbBounds.height - thumbBounds.height/2);
     }
 
     boolean isVertical = (scrollbar.getOrientation() == JScrollBar.HORIZONTAL);

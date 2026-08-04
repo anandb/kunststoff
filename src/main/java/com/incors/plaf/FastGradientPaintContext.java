@@ -21,15 +21,18 @@ class FastGradientPaintContext implements PaintContext {
 		ColorModel model;
 		int parallelLength, startColor, endColor;
 		boolean isVertical;
+		@Override
 		public boolean equals( Object o ) {
 			if ( ! ( o instanceof GradientInfo ) ) return false;
 			GradientInfo gi = (GradientInfo) o;
 			if ( gi.model.equals(model) && gi.parallelLength == parallelLength && gi.startColor == startColor && gi.endColor == endColor && gi.isVertical == isVertical ) return true;
 			return false;
 		}
+		@Override
 		public int hashCode() {
 			return parallelLength;
 		}
+                @Override
                 public String toString() {
                     return "Direction:" + (isVertical?"ver":"hor") + ", Length: "+Integer.toString( parallelLength )+", Color1: "+Integer.toString( startColor, 16 )+", Color2: "+Integer.toString( endColor, 16 );
                 }
@@ -142,14 +145,17 @@ class FastGradientPaintContext implements PaintContext {
                 }
 	}
 
+	@Override
 	public void dispose() {
 		gradient.dispose();
 	}
 
+	@Override
 	public ColorModel getColorModel() {
 		return info.model;
 	}
 
+	@Override
 	public synchronized Raster getRaster( int x, int y, int w, int h ) {
 		if ( info.isVertical ) return gradient.getRaster( y - parallelDevicePos, w, h );
 		else return gradient.getRaster( x - parallelDevicePos, h, w );

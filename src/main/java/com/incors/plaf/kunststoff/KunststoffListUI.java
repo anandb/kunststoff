@@ -41,6 +41,7 @@ public class KunststoffListUI extends BasicListUI {
     return new KunststoffListUI(list);
   }
 
+  @Override
   public void update(Graphics g, JComponent c) {
     if (c.isOpaque()) {
       Graphics2D g2D = (Graphics2D) g;
@@ -100,6 +101,7 @@ public class KunststoffListUI extends BasicListUI {
   // and the renderer is a JComponent (like DefaultListCellRenderer) and the
   // background color is a ColorUIResource (which means it probably has the
   // original color assigned by the Look&Feel).
+  @Override
   protected void paintCell(Graphics g, int row, Rectangle rowBounds,
                             ListCellRenderer cellRenderer, ListModel dataModel,
                             ListSelectionModel selModel, int leadIndex) {

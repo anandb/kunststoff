@@ -26,6 +26,7 @@ public class KunststoffTextFieldUI extends BasicTextFieldUI{
     return new KunststoffTextFieldUI(c);
   }
 
+  @Override
   protected void paintBackground(Graphics g) {
     super.paintBackground(g);
 
@@ -41,7 +42,7 @@ public class KunststoffTextFieldUI extends BasicTextFieldUI{
     Color colorShadow = KunststoffLookAndFeel.getTextComponentGradientColorShadow();
     if (colorShadow != null) {
       Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-      Rectangle rect = new Rectangle(0, myComponent.getHeight()/2, myComponent.getWidth(), myComponent.getHeight()/2);
+      Rectangle rect = new Rectangle(0, myComponent.getHeight()/2, myComponent.getWidth(), myComponent.getHeight() - myComponent.getHeight()/2);
       KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rect, true);
     }
   }

@@ -36,7 +36,8 @@ import javax.swing.*;
 import javax.swing.plaf.*;
 import javax.swing.plaf.metal.*;
 
-import com.incors.plaf.kunststoff.themes.KunststoffPresentationTheme;
+import com.incors.plaf.kunststoff.themes.KunststoffDesktopTheme;
+import com.incors.plaf.kunststoff.themes.KunststoffThemeRegistry;
 
 /**
  * The main class for the Kunststoff Look&Feel.
@@ -50,7 +51,6 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
 
   static {
     System.setProperty("awt.useSystemAAFontSettings", "on");
-    System.setProperty("sun.font.fontmanager", "sun.font.FontManager");
   }
 
   public KunststoffLookAndFeel() {
@@ -66,32 +66,38 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
   }
 
 
+  @Override
   public String getID() {
     return "Kunststoff";
   }
 
 
+  @Override
   public String getName() {
     return "Kunststoff";
   }
 
 
+  @Override
   public String getDescription() {
     return "Kunststoff Look&Feel 2.0.2. Developed by INCORS GmbH and contributors"
            + ", 2001-2004. Published under the Lesser GNU Public Licence.";
   }
 
 
+  @Override
   public boolean isNativeLookAndFeel() {
     return false;
   }
 
 
+  @Override
   public boolean isSupportedLookAndFeel() {
     return true;
   }
 
 
+  @Override
   protected void initClassDefaults(UIDefaults table) {
     super.initClassDefaults(table);
     putDefault(table, "ButtonUI");
@@ -130,11 +136,25 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
     }
   }
 
+  @Override
   protected void createDefaultTheme() {
     if (!themeHasBeenSet) {
-      setCurrentTheme(new KunststoffDesktopTheme());
+      String themeName = System.getenv("KUNSTSTOFF_THEME");
+      if (themeName != null && !themeName.trim().isEmpty()) {
+        var registeredTheme = KunststoffThemeRegistry.getTheme(themeName.trim());
+        if (registeredTheme != null) {
+          setCurrentTheme(registeredTheme);
+        } else {
+          // Unknown theme name — fall back to the default theme and warn once
+          System.err.println("[Kunststoff] Unknown theme '" + themeName.trim()
+              + "', available: " + String.join(", ", KunststoffThemeRegistry.getAvailableThemeNames()));
+          setCurrentTheme(new KunststoffDesktopTheme());
+        }
+      } else {
+        setCurrentTheme(new KunststoffDesktopTheme());
+      }
     }
-    if (gradientTheme==null) {
+    if (gradientTheme == null) {
       gradientTheme = new KunststoffGradientTheme();
     }
   }
@@ -159,6 +179,7 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
     themeHasBeenSet = true;
   }
 
+  @Override
   protected void initSystemColorDefaults(UIDefaults table) {
     super.initSystemColorDefaults(table);
     // we made the color a bit darker because the were complaints about the color
@@ -166,6 +187,7 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
     table.put("textHighlight", KunststoffUtilities.getTranslucentColorUIResource(getTextHighlightColor(), 128));
   }
 
+  @Override
   protected void initComponentDefaults(UIDefaults table) {
     super.initComponentDefaults(table);
     table.put("SplitPane.dividerSize", Integer.valueOf(8)); // will result in only one row of bumps

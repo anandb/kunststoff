@@ -30,6 +30,7 @@ public class KunststoffTextAreaUI extends BasicTextAreaUI {
     return new KunststoffTextAreaUI(c);
   }
 
+  @Override
   protected void paintBackground(Graphics g) {
     super.paintBackground(g);
     Rectangle editorRect = getVisibleEditorRect();
@@ -49,7 +50,7 @@ public class KunststoffTextAreaUI extends BasicTextAreaUI {
     Color colorShadow = KunststoffLookAndFeel.getTextComponentGradientColorShadow();
     if (colorShadow != null) {
       Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-      Rectangle rect = new Rectangle(editorRect.x, editorRect.y+editorRect.height/2, editorRect.width, editorRect.height/2);
+      Rectangle rect = new Rectangle(editorRect.x, editorRect.y+editorRect.height/2, editorRect.width, editorRect.height - editorRect.height/2);
       KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rect, true);
     }
   }

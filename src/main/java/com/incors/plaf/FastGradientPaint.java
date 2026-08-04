@@ -19,12 +19,16 @@ public class FastGradientPaint implements Paint {
 		isVertical = isV;
 	}
 
+	@Override
 	public synchronized PaintContext createContext( ColorModel cm, Rectangle r, Rectangle2D r2d, AffineTransform xform, RenderingHints hints ) {
 		return new FastGradientPaintContext( cm, r, startColor, endColor, isVertical );
 	}
 
+	@Override
 	public int getTransparency() {
-		return ( ( ( (startColor & endColor) >> 24)  & 0xFF ) == 0xFF) ? OPAQUE : TRANSLUCENT;
+		boolean opaque = ( ( startColor >> 24 ) & 0xFF ) == 0xFF
+		                && ( ( endColor   >> 24 ) & 0xFF ) == 0xFF;
+		return opaque ? OPAQUE : TRANSLUCENT;
 	}
 }
 

@@ -30,10 +30,11 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
      */
     public KunststoffDesktopTheme() {
         String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();
+        String monoFontName = com.incors.plaf.kunststoff.KunststoffUtilities.getMonospaceFontName();
         menuFont = new FontUIResource(fontName, Font.PLAIN, 16);
         controlFont = new FontUIResource(fontName, Font.PLAIN, 16);
         windowTitleFont = new FontUIResource(fontName, Font.BOLD, 16);
-        monospacedFont = new FontUIResource("Hack", Font.PLAIN, 14);
+        monospacedFont = new FontUIResource(monoFontName, Font.PLAIN, 14);
     }
 
     @Override

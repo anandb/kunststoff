@@ -26,6 +26,7 @@ public class KunststoffComboBoxUI extends MetalComboBoxUI {
   /**
    * Installs MyMetalComboBoxButton
    */
+  @Override
   protected JButton createArrowButton() {
     JButton button = new MyMetalComboBoxButton (comboBox, new MetalComboBoxIcon(),
                                                 comboBox.isEditable() ? true : false,
@@ -46,6 +47,7 @@ public class KunststoffComboBoxUI extends MetalComboBoxUI {
       super (cb, i, onlyIcon, pane, list);
     }
 
+    @Override
     public void paintComponent(Graphics g) {
       if (! iconOnly && MyMetalComboBoxButton.this.comboBox != null) {
         boolean isSetRendererOpaque = false;

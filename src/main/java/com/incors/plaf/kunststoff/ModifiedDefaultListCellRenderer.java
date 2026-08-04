@@ -14,6 +14,7 @@ import javax.swing.*;
  */
 public class ModifiedDefaultListCellRenderer extends DefaultListCellRenderer {
 
+  @Override
   public Component getListCellRendererComponent(JList list,
                                                 Object value,
                                                 int index,

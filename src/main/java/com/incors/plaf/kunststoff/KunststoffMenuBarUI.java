@@ -16,6 +16,7 @@ public class KunststoffMenuBarUI extends BasicMenuBarUI {
     return new KunststoffMenuBarUI();
   }
 
+  @Override
   public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
     // paint upper gradient
@@ -30,7 +31,7 @@ public class KunststoffMenuBarUI extends BasicMenuBarUI {
     Color colorShadow = KunststoffLookAndFeel.getComponentGradientColorShadow();
     if (colorShadow != null) {
       Color colorShadowFaded = KunststoffUtilities.getTranslucentColor(colorShadow, 0);
-      Rectangle rect = new Rectangle(0, c.getHeight()/2, c.getWidth(), c.getHeight()/2);
+      Rectangle rect = new Rectangle(0, c.getHeight()/2, c.getWidth(), c.getHeight() - c.getHeight()/2);
       KunststoffUtilities.drawGradient(g, colorShadowFaded, colorShadow, rect, true);
     }
   }
