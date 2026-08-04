@@ -132,4 +132,37 @@ public class KunststoffUtilities {
             c.setPreferredSize(new Dimension((int) current.getWidth(), Math.max((int)current.getHeight(), 2 * fontMetrics.getHeight())));
         }
     }
+
+    /**
+     * Get the default font name from the environment, system properties, or fallback to Segoe UI or Fira Sans.
+     */
+    public static String getDefaultFontName() {
+        String fontName = System.getenv("KUNSTSTOFF_FONT");
+        if (fontName == null || fontName.trim().isEmpty()) {
+            fontName = System.getProperty("kunststoff.font");
+        }
+        
+        if (fontName != null && !fontName.trim().isEmpty()) {
+            return fontName.trim();
+        }
+        
+        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        boolean hasSegoe = false;
+        boolean hasFira = false;
+        for (String f : fonts) {
+            if ("Segoe UI".equalsIgnoreCase(f)) {
+                hasSegoe = true;
+            } else if ("Fira Sans".equalsIgnoreCase(f)) {
+                hasFira = true;
+            }
+        }
+        
+        if (hasSegoe) {
+            return "Segoe UI";
+        } else if (hasFira) {
+            return "Fira Sans";
+        }
+        
+        return "SansSerif";
+    }
 }

@@ -41,10 +41,11 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
      */
     public KunststoffPresentationTheme()
     {
-        menuFont = new FontUIResource("Segoe UI",Font.PLAIN, 17);
-        controlFont = new FontUIResource("Segoe UI",Font.PLAIN, 16);
-        textFont = new FontUIResource("Segoe UI",Font.PLAIN, 14);
-        windowTitleFont =  new FontUIResource("Segoe UI", Font.BOLD, 17);
+        String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();
+        menuFont = new FontUIResource(fontName,Font.PLAIN, 17);
+        controlFont = new FontUIResource(fontName,Font.PLAIN, 16);
+        textFont = new FontUIResource(fontName,Font.PLAIN, 14);
+        windowTitleFont =  new FontUIResource(fontName, Font.BOLD, 17);
         monospacedFont = new FontUIResource("Hack", Font.PLAIN, 15);
     }
 

@@ -29,9 +29,10 @@ public class KunststoffDesktopTheme extends com.incors.plaf.kunststoff.Kunststof
      * Crates this Theme
      */
     public KunststoffDesktopTheme() {
-        menuFont = new FontUIResource("Fira Sans", Font.PLAIN, 16);
-        controlFont = new FontUIResource("Fira Sans", Font.PLAIN, 16);
-        windowTitleFont = new FontUIResource("Fira Sans", Font.BOLD, 16);
+        String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();
+        menuFont = new FontUIResource(fontName, Font.PLAIN, 16);
+        controlFont = new FontUIResource(fontName, Font.PLAIN, 16);
+        windowTitleFont = new FontUIResource(fontName, Font.BOLD, 16);
         monospacedFont = new FontUIResource("Hack", Font.PLAIN, 14);
     }
 
