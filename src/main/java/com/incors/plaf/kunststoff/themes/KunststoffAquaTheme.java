@@ -20,7 +20,6 @@ public class KunststoffAquaTheme extends KunststoffTheme {
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;
     private final FontUIResource windowTitleFont;
-    private final FontUIResource monospacedFont;
 
     public KunststoffAquaTheme() {
         String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();

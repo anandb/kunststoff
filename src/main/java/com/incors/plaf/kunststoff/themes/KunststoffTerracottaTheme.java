@@ -9,9 +9,9 @@ import com.incors.plaf.kunststoff.KunststoffTheme;
 
 public class KunststoffTerracottaTheme extends KunststoffTheme {
 
-    private final ColorUIResource primary1 = new ColorUIResource(new Color(130, 65, 35));
-    private final ColorUIResource primary2 = new ColorUIResource(new Color(190, 110, 65));
-    private final ColorUIResource primary3 = new ColorUIResource(new Color(220, 175, 145));
+    private final ColorUIResource primary1 = new ColorUIResource(new Color(95, 28, 10));
+    private final ColorUIResource primary2 = new ColorUIResource(new Color(140, 42, 15));
+    private final ColorUIResource primary3 = new ColorUIResource(new Color(170, 75, 35));
 
     private final ColorUIResource secondary1 = new ColorUIResource(new Color(100, 55, 30));
     private final ColorUIResource secondary2 = new ColorUIResource(new Color(160, 95, 55));
@@ -20,7 +20,6 @@ public class KunststoffTerracottaTheme extends KunststoffTheme {
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;
     private final FontUIResource windowTitleFont;
-    private final FontUIResource monospacedFont;
 
     public KunststoffTerracottaTheme() {
         String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();

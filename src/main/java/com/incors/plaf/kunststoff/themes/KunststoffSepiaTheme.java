@@ -20,7 +20,6 @@ public class KunststoffSepiaTheme extends KunststoffTheme {
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;
     private final FontUIResource windowTitleFont;
-    private final FontUIResource monospacedFont;
 
     public KunststoffSepiaTheme() {
         String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();

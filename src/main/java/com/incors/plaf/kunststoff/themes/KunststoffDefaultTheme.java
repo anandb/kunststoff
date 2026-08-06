@@ -24,7 +24,6 @@ public class KunststoffDefaultTheme extends KunststoffTheme {
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;
     private final FontUIResource windowTitleFont;
-    private final FontUIResource monospacedFont;
 
     public KunststoffDefaultTheme() {
         String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();

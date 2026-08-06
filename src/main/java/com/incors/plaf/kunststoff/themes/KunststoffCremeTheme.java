@@ -20,7 +20,6 @@ public class KunststoffCremeTheme extends KunststoffTheme {
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;
     private final FontUIResource windowTitleFont;
-    private final FontUIResource monospacedFont;
 
     public KunststoffCremeTheme() {
         String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();

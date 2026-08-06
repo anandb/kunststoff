@@ -9,8 +9,6 @@ package com.incors.plaf.kunststoff.themes;
 import java.awt.Font;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
 
 /**
  *
@@ -33,7 +31,6 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     private FontUIResource controlFont;
     private FontUIResource menuFont;
     private FontUIResource windowTitleFont;
-    private FontUIResource monospacedFont;
     private FontUIResource textFont;
 
     /**
@@ -135,15 +132,5 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     public ColorUIResource getSecondary3()
     {
         return secondary3;
-    }
-
-    @Override
-    public void addCustomEntriesToTable(UIDefaults table)
-    {
-        super.addCustomEntriesToTable(table);
-        table.put("PasswordField.font", monospacedFont);
-        table.put("TextArea.font", monospacedFont);
-        table.put("TextPane.font", monospacedFont);
-        table.put("EditorPane.font", monospacedFont);
     }
 }

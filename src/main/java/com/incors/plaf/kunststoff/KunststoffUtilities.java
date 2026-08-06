@@ -183,6 +183,7 @@ public class KunststoffUtilities {
         } else {
             cachedDefaultFontName = "SansSerif";
         }
+        System.out.println("[Kunststoff] Using default font: " + cachedDefaultFontName);
         return cachedDefaultFontName;
     }
 
