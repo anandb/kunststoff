@@ -157,6 +157,36 @@ public class KunststoffTheme extends DefaultMetalTheme {
         table.put("ToolTip.border", new CompoundBorder(
             new LineBorder(darken(getSecondary3(), 0.18f), 1),
             new EmptyBorder(4, 6, 4, 6)));
+
+        // Separator — subtle lines from the palette
+        table.put("Separator.foreground", new ColorUIResource(darken(getSecondary3(), 0.12f)));
+        table.put("Separator.background", new ColorUIResource(getSecondary3()));
+
+        // Progress bar — accent on track
+        table.put("ProgressBar.foreground", new ColorUIResource(darken(getSecondary2(), 0.10f)));
+        table.put("ProgressBar.background", new ColorUIResource(lighten(getSecondary3(), 0.04f)));
+        table.put("ProgressBar.selectionForeground", Color.WHITE);
+        table.put("ProgressBar.selectionBackground", getPrimary1());
+
+        // List — selection colors
+        table.put("List.selectionBackground", new ColorUIResource(darken(getSecondary2(), 0.10f)));
+        table.put("List.selectionForeground", Color.WHITE);
+        table.put("List.background", new ColorUIResource(getSecondary3()));
+
+        // Table — selection and grid
+        table.put("Table.selectionBackground", new ColorUIResource(darken(getSecondary2(), 0.10f)));
+        table.put("Table.selectionForeground", Color.WHITE);
+        table.put("Table.gridColor", new ColorUIResource(darken(getSecondary3(), 0.08f)));
+        table.put("Table.background", new ColorUIResource(getSecondary3()));
+
+        // Tree — selection and background
+        table.put("Tree.selectionBackground", new ColorUIResource(darken(getSecondary2(), 0.10f)));
+        table.put("Tree.selectionForeground", Color.WHITE);
+        table.put("Tree.textBackground", new ColorUIResource(getSecondary3()));
+
+        // SplitPane — divider
+        table.put("SplitPane.dividerSize", 6);
+        table.put("SplitPaneDivider.border", javax.swing.BorderFactory.createEmptyBorder());
     }
 
     // ── HSB helpers for palette-derived colours ─────────────────────────
