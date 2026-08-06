@@ -25,7 +25,7 @@ public class KunststoffPresentationTheme extends com.incors.plaf.kunststoff.Kuns
     // secondary colors
     private final ColorUIResource secondary1 = new ColorUIResource(100, 100, 100);
     private final ColorUIResource secondary2 = new ColorUIResource(130, 130, 130);
-    private final ColorUIResource secondary3 = new ColorUIResource(180, 180, 180);
+    private final ColorUIResource secondary3 = new ColorUIResource(170, 170, 185);
 
     // fonts
     private FontUIResource controlFont;

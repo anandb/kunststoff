@@ -15,7 +15,7 @@ public class KunststoffAquaTheme extends KunststoffTheme {
 
     private final ColorUIResource secondary1 = new ColorUIResource(new Color(50, 50, 50));
     private final ColorUIResource secondary2 = new ColorUIResource(new Color(100, 100, 100));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(200, 220, 225));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(180, 215, 225));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;

@@ -15,7 +15,7 @@ public class KunststoffCremeTheme extends KunststoffTheme {
 
     private final ColorUIResource secondary1 = new ColorUIResource(new Color(80, 60, 30));
     private final ColorUIResource secondary2 = new ColorUIResource(new Color(140, 120, 80));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(240, 235, 220));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(235, 225, 195));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;

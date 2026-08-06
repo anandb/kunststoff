@@ -6,6 +6,7 @@ package com.incors.plaf.kunststoff;
  */
 
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
 import javax.swing.plaf.*;
 import javax.swing.plaf.metal.*;
@@ -24,9 +25,74 @@ public class KunststoffButtonUI extends MetalButtonUI {
   }
 
   @Override
-  public void paint(Graphics g, JComponent c) {
-    super.paint(g, c);
+  public void installDefaults(AbstractButton b) {
+    super.installDefaults(b);
+    // Remove Metal's rectangular border so our rounded outline is the only border
+    b.setBorderPainted(false);
+    b.setOpaque(true);
+  }
 
+  @Override
+  public void paint(Graphics g, JComponent c) {
+    // Toolbar buttons stay flat — no rounded corners, no gradient
+    if (c.getParent() instanceof JToolBar) {
+      super.paint(g, c);
+      return;
+    }
+
+    boolean opaque = c.isOpaque();
+    int arc = opaque ? Math.min(14, c.getHeight()) : 0;
+    RoundRectangle2D shape = new RoundRectangle2D.Float(0, 0, c.getWidth(), c.getHeight(), arc, arc);
+
+    Graphics2D g2 = (Graphics2D) g.create();
+    try {
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+      if (opaque) {
+        // Paint the rounded background first — this replaces Metal's rectangular fill
+        g2.setColor(c.getBackground());
+        g2.fill(shape);
+        g2.setClip(shape);
+      }
+
+      // Now super.paint() (MetalButtonUI) draws bevels + text, all clipped to the rounded shape
+      super.paint(g2, c);
+      paintGradient(g2, c);
+    } finally {
+      g2.dispose();
+    }
+
+    // Draw rounded outline on top
+    if (opaque) {
+      Graphics2D gb = (Graphics2D) g.create();
+      try {
+        gb.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        gb.setColor(getOutlineColor(c));
+        gb.setStroke(new BasicStroke(1f));
+        gb.draw(new RoundRectangle2D.Float(0.5f, 0.5f, c.getWidth() - 1f, c.getHeight() - 1f, arc, arc));
+      } finally {
+        gb.dispose();
+      }
+    }
+  }
+
+  /**
+   * Outline color that reacts to the button state: accent on hover/press,
+   * muted grey when disabled, dark otherwise.
+   */
+  private Color getOutlineColor(JComponent c) {
+    if (!c.isEnabled()) {
+      return MetalLookAndFeel.getControlShadow();
+    }
+    AbstractButton b = (AbstractButton) c;
+    ButtonModel m = b.getModel();
+    if (m.isPressed() || (b.isRolloverEnabled() && m.isRollover())) {
+      return MetalLookAndFeel.getFocusColor();
+    }
+    return MetalLookAndFeel.getControlDarkShadow();
+  }
+
+  private void paintGradient(Graphics g, JComponent c) {
     if (!c.isOpaque()) {
       return;
     }

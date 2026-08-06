@@ -15,7 +15,7 @@ public class KunststoffSepiaTheme extends KunststoffTheme {
 
     private final ColorUIResource secondary1 = new ColorUIResource(new Color(70, 50, 25));
     private final ColorUIResource secondary2 = new ColorUIResource(new Color(130, 100, 60));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(235, 225, 205));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(230, 218, 195));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;

@@ -15,7 +15,7 @@ public class KunststoffPurpleTheme extends KunststoffTheme {
 
     private final ColorUIResource secondary1 = new ColorUIResource(new Color(50, 30, 60));
     private final ColorUIResource secondary2 = new ColorUIResource(new Color(100, 70, 110));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(210, 195, 220));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(200, 185, 215));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;

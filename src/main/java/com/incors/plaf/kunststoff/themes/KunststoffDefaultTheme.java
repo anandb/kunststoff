@@ -19,7 +19,7 @@ public class KunststoffDefaultTheme extends KunststoffTheme {
 
     private final ColorUIResource secondary1 = new ColorUIResource(new Color(100, 100, 100));
     private final ColorUIResource secondary2 = new ColorUIResource(new Color(130, 130, 130));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(180, 180, 180));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(170, 170, 185));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;

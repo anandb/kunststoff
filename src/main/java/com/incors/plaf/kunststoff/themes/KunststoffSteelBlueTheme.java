@@ -15,7 +15,7 @@ public class KunststoffSteelBlueTheme extends KunststoffTheme {
 
     private final ColorUIResource secondary1 = new ColorUIResource(new Color(60, 70, 80));
     private final ColorUIResource secondary2 = new ColorUIResource(new Color(100, 110, 130));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(190, 200, 210));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(180, 195, 210));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;

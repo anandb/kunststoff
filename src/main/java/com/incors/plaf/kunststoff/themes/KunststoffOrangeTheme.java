@@ -15,7 +15,7 @@ public class KunststoffOrangeTheme extends KunststoffTheme {
 
     private final ColorUIResource secondary1 = new ColorUIResource(new Color(60, 30, 0));
     private final ColorUIResource secondary2 = new ColorUIResource(new Color(120, 60, 20));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(240, 220, 200));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(235, 210, 185));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;

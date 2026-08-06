@@ -9,13 +9,13 @@ import com.incors.plaf.kunststoff.KunststoffTheme;
 
 public class KunststoffTerracottaTheme extends KunststoffTheme {
 
-    private final ColorUIResource primary1 = new ColorUIResource(new Color(95, 28, 10));
-    private final ColorUIResource primary2 = new ColorUIResource(new Color(140, 42, 15));
-    private final ColorUIResource primary3 = new ColorUIResource(new Color(170, 75, 35));
+    private final ColorUIResource primary1 = new ColorUIResource(new Color(140, 55, 20));
+    private final ColorUIResource primary2 = new ColorUIResource(new Color(185, 90, 40));
+    private final ColorUIResource primary3 = new ColorUIResource(new Color(235, 205, 175));
 
-    private final ColorUIResource secondary1 = new ColorUIResource(new Color(100, 55, 30));
-    private final ColorUIResource secondary2 = new ColorUIResource(new Color(160, 95, 55));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(230, 215, 200));
+    private final ColorUIResource secondary1 = new ColorUIResource(new Color(120, 50, 20));
+    private final ColorUIResource secondary2 = new ColorUIResource(new Color(170, 100, 55));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(215, 150, 100));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;
