@@ -60,6 +60,6 @@ public final class KunststoffThemeRegistry {
      * Returns the list of available theme names for display.
      */
     public static String[] getAvailableThemeNames() {
-        return THEMES.keySet().toArray(new String[0]);
+        return THEMES.keySet().toArray(String[]::new);
     }
 }

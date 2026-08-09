@@ -145,9 +145,7 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
         if (registeredTheme != null) {
           setCurrentTheme(registeredTheme);
         } else {
-          // Unknown theme name — fall back to the default theme and warn once
-          System.err.println("[Kunststoff] Unknown theme '" + themeName.trim()
-              + "', available: " + String.join(", ", KunststoffThemeRegistry.getAvailableThemeNames()));
+          // Unknown theme name — fall back to the default theme
           setCurrentTheme(new KunststoffDesktopTheme());
         }
       } else {

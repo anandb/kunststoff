@@ -21,8 +21,8 @@ public class KunststoffProgressBarUI extends BasicProgressBarUI {
   private static Color cachedShadowColor = null;
   private static Color cachedReflectionFaded = null;
   private static Color cachedShadowFaded = null;
-  private Rectangle rectReflection = new Rectangle();
-  private Rectangle rectShadow = new Rectangle();
+  private final Rectangle rectReflection = new Rectangle();
+  private final Rectangle rectShadow = new Rectangle();
 
   public static ComponentUI createUI(JComponent c) {
       return new KunststoffProgressBarUI();

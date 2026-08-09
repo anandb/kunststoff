@@ -28,9 +28,9 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
     //  private final ColorUIResource secondary3 = new ColorUIResource(224, 224, 224);
 
     // fonts
-    private FontUIResource controlFont;
-    private FontUIResource menuFont;
-    private FontUIResource windowTitleFont;
+    private final FontUIResource controlFont;
+    private final FontUIResource menuFont;
+    private final FontUIResource windowTitleFont;
 
     /**
      * Crates this Theme

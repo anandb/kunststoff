@@ -110,8 +110,8 @@ class FastGradientPaintContext implements PaintContext {
 		}
 	}
 
-	private static WeakHashMap gradientCache = new WeakHashMap();
-        private static LinkedList recentInfos = new LinkedList();
+	private static final WeakHashMap gradientCache = new WeakHashMap();
+        private static final LinkedList recentInfos = new LinkedList();
 
 	GradientInfo info;
 	int parallelDevicePos;

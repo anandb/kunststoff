@@ -15,10 +15,10 @@ public class KunststoffInternalFrameUI extends MetalInternalFrameUI {
   private MetalInternalFrameTitlePane titlePane;
   private PropertyChangeListener paletteListener;
 
-  private static String FRAME_TYPE     = "JInternalFrame.frameType";
-  private static String NORMAL_FRAME   = "normal";
-  private static String PALETTE_FRAME  = "palette";
-  private static String OPTION_DIALOG  = "optionDialog";
+  private static final String FRAME_TYPE     = "JInternalFrame.frameType";
+  private static final String NORMAL_FRAME   = "normal";
+  private static final String PALETTE_FRAME  = "palette";
+  private static final String OPTION_DIALOG  = "optionDialog";
 
   protected static String IS_PALETTE   = "JInternalFrame.isPalette"; // added by Thomas Auinger
                                                                      // to solve a compiling problem

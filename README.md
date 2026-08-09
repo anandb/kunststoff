@@ -16,6 +16,30 @@ This fork includes several modifications and improvements over the original Sour
 - **Font Change**: Default font set to Segoe UI for improved readability
 - **Build Configuration**: Updates to Maven project configuration (pom.xml)
 
+## Themes
+
+Select a theme at runtime with the `KUNSTSTOFF_THEME` environment variable (case-insensitive):
+
+| Name | Description |
+|------|-------------|
+| `default` | Gray-blue (base colors) |
+| `brick` | Warm brown (original Kunststoff) |
+| `aqua` | Teal/aqua |
+| `creme` | Warm cream/tan |
+| `olive` | Olive green |
+| `orange` | Orange |
+| `purple` | Purple/violet |
+| `sepia` | Sepia/brown-yellow |
+| `steelblue` | Blue-gray |
+| `terracotta` | Warm clay orange |
+
+Example:
+
+```bash
+export KUNSTSTOFF_THEME=brick
+netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/com/incors/kunstoff-laf/2.0.2/kunstoff-laf-2.0.2.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
+```
+
 ## Usage
 
 ### NetBeans IDE
