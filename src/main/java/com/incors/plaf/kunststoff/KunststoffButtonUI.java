@@ -27,9 +27,11 @@ public class KunststoffButtonUI extends MetalButtonUI {
   @Override
   public void installDefaults(AbstractButton b) {
     super.installDefaults(b);
-    // Remove Metal's rectangular border so our rounded outline is the only border
+    // Remove Metal's rectangular border so our rounded outline is the only border.
+    // Note: we do NOT force setOpaque(true) here — the body is painted based on
+    // contentAreaFilled, and overriding opaque would defeat callers (e.g. NetBeans)
+    // that explicitly ask for a non-opaque button.
     b.setBorderPainted(false);
-    b.setOpaque(true);
   }
 
   @Override
@@ -40,18 +42,32 @@ public class KunststoffButtonUI extends MetalButtonUI {
       return;
     }
 
-    boolean opaque = c.isOpaque();
-    int arc = opaque ? Math.min(14, c.getHeight()) : 0;
+    // The button body is controlled by contentAreaFilled, NOT by opaque.
+    // Metal (and FlatLaf) paint the button chrome regardless of the opaque flag;
+    // Swing's own contract says opaque only means "this component fills its
+    // bounds". NetBeans, for example, creates some of its buttons with
+    // setOpaque(false) (see autoupdate's HeaderPanel/DetailsPanel); if we skip
+    // painting those we end up with bare text on the parent's background.
+    boolean paintBody = isBodyPainted(c);
+    int arc = paintBody ? Math.min(14, c.getHeight()) : 0;
     RoundRectangle2D shape = new RoundRectangle2D.Float(0, 0, c.getWidth(), c.getHeight(), arc, arc);
 
     Graphics2D g2 = (Graphics2D) g.create();
     try {
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-      if (opaque) {
-        // Paint the rounded background first — this replaces Metal's rectangular fill
-        g2.setColor(c.getBackground());
-        g2.fill(shape);
+      if (paintBody) {
+        // Paint the rounded background first — this replaces Metal's rectangular fill.
+        // If the button is not opaque the rounded corners are not cleared by Swing,
+        // so paint whatever is behind the button first to avoid stale pixels there.
+        if (!c.isOpaque()) {
+          paintParentBackground(g2, c);
+        }
+        Color bg = c.getBackground();
+        if (bg != null) {
+          g2.setColor(bg);
+          g2.fill(shape);
+        }
         g2.setClip(shape);
       }
 
@@ -63,7 +79,7 @@ public class KunststoffButtonUI extends MetalButtonUI {
     }
 
     // Draw rounded outline on top
-    if (opaque) {
+    if (paintBody) {
       Graphics2D gb = (Graphics2D) g.create();
       try {
         gb.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -74,6 +90,44 @@ public class KunststoffButtonUI extends MetalButtonUI {
         gb.dispose();
       }
     }
+  }
+
+  /**
+   * Whether this button paints its own body (rounded fill, gradient, outline).
+   * Swing's {@code contentAreaFilled} property is the switch for that, as in
+   * MetalButtonUI — the {@code opaque} flag only says whether Swing fills the
+   * rectangular background behind us.
+   */
+  private boolean isBodyPainted(JComponent c) {
+    if (c instanceof AbstractButton) {
+      return ((AbstractButton) c).isContentAreaFilled();
+    }
+    return c.isOpaque();
+  }
+
+  /**
+   * Paints the background of the first opaque ancestor, so the area outside our
+   * rounded shape looks like the surrounding container instead of garbage.
+   */
+  private static void paintParentBackground(Graphics g, JComponent c) {
+    Container parent = c.getParent();
+    if (parent == null) {
+      return;
+    }
+    Color bg = getOpaqueParentBackground(parent);
+    if (bg != null) {
+      g.setColor(bg);
+      g.fillRect(0, 0, c.getWidth(), c.getHeight());
+    }
+  }
+
+  private static Color getOpaqueParentBackground(Container parent) {
+    Color bg = parent.getBackground();
+    if (bg == null || !parent.isOpaque()) {
+      Container grandParent = parent.getParent();
+      return grandParent != null ? getOpaqueParentBackground(grandParent) : null;
+    }
+    return bg;
   }
 
   /**
@@ -93,7 +147,7 @@ public class KunststoffButtonUI extends MetalButtonUI {
   }
 
   private void paintGradient(Graphics g, JComponent c) {
-    if (!c.isOpaque()) {
+    if (!isBodyPainted(c)) {
       return;
     }
 
