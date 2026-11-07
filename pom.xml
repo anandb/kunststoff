@@ -110,6 +110,6 @@
 		<developerConnection>https://kunststoff-laf.svn.sourceforge.net/svnroot/kunststoff-laf</developerConnection>
 	</scm>
     <properties>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
     </properties>
 </project>
