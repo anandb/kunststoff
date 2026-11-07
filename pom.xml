@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.incors</groupId>
+	<groupId>io.github.anandb</groupId>
 	<artifactId>kunstoff-laf</artifactId>
 	<version>2.0.2</version>
 	<packaging>jar</packaging>
@@ -96,8 +96,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.13.0</version>
                 <configuration>
-                    <source>21</source>
-                    <release>21</release>
+                    <source>17</source>
+                    <release>17</release>
                     <fork>true</fork>
                     <optimize>true</optimize>
                 </configuration>

@@ -11,6 +11,7 @@ import com.incors.plaf.*;
 
 import javax.swing.JComponent;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.FontUIResource;
 
 /**
  * Collection of methods often used in the Kunststoff Look&Feel
@@ -132,6 +133,7 @@ public class KunststoffUtilities {
 
     private static String cachedDefaultFontName = null;
     private static String cachedMonospaceFontName = null;
+    private static int cachedMinimumFontSize = -1;
 
     /**
      * Names of preferred monospaced fonts, in order of preference. The first one
@@ -210,5 +212,43 @@ public class KunststoffUtilities {
         }
         cachedMonospaceFontName = "Monospaced";
         return cachedMonospaceFontName;
+    }
+
+    /**
+     * Minimum font size in points applied to every theme font. Configured with
+     * the KUNSTSTOFF_MIN_FONT_SIZE environment variable; unset, empty, invalid,
+     * or non-positive values use the default of 12 points. The result is cached
+     * because the value is read once when the look and feel is initialised.
+     */
+    public static int getMinimumFontSize() {
+        if (cachedMinimumFontSize >= 0) {
+            return cachedMinimumFontSize;
+        }
+        int minimum = 12;
+        String value = System.getenv("KUNSTSTOFF_MIN_FONT_SIZE");
+        if (value != null && !value.trim().isEmpty()) {
+            try {
+                int parsed = Integer.parseInt(value.trim());
+                if (parsed > 0) {
+                    minimum = parsed;
+                }
+            } catch (NumberFormatException ex) {
+                // Invalid value: keep the default floor
+            }
+        }
+        cachedMinimumFontSize = minimum;
+        return cachedMinimumFontSize;
+    }
+
+    /**
+     * Creates a UI font, raising its size to {@link #getMinimumFontSize()}.
+     *
+     * @param name  font family name
+     * @param style font style, see {@link Font}
+     * @param size  requested size in points
+     * @return a {@link FontUIResource} no smaller than the configured minimum
+     */
+    public static FontUIResource createFont(String name, int style, int size) {
+        return new FontUIResource(name, style, Math.max(size, getMinimumFontSize()));
     }
 }

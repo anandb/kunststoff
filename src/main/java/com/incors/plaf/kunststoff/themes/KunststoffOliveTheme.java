@@ -1,11 +1,13 @@
 package com.incors.plaf.kunststoff.themes;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 
 import com.incors.plaf.kunststoff.KunststoffTheme;
+import com.incors.plaf.kunststoff.KunststoffUtilities;
 
 public class KunststoffOliveTheme extends KunststoffTheme {
 
@@ -22,12 +24,12 @@ public class KunststoffOliveTheme extends KunststoffTheme {
     private final FontUIResource windowTitleFont;
 
     public KunststoffOliveTheme() {
-        String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();
-        String monoFontName = com.incors.plaf.kunststoff.KunststoffUtilities.getMonospaceFontName();
-        menuFont = new FontUIResource(fontName, java.awt.Font.PLAIN, 16);
-        controlFont = new FontUIResource(fontName, java.awt.Font.PLAIN, 16);
-        windowTitleFont = new FontUIResource(fontName, java.awt.Font.BOLD, 16);
-        monospacedFont = new FontUIResource(monoFontName, java.awt.Font.PLAIN, 14);
+        String fontName = KunststoffUtilities.getDefaultFontName();
+        String monoFontName = KunststoffUtilities.getMonospaceFontName();
+        menuFont = KunststoffUtilities.createFont(fontName, Font.PLAIN, 16);
+        controlFont = KunststoffUtilities.createFont(fontName, Font.PLAIN, 16);
+        windowTitleFont = KunststoffUtilities.createFont(fontName, Font.BOLD, 16);
+        monospacedFont = KunststoffUtilities.createFont(monoFontName, Font.PLAIN, 14);
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.incors.plaf.kunststoff;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.UIDefaults;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -25,10 +27,10 @@ public class KunststoffTheme extends DefaultMetalTheme {
     public KunststoffTheme() {
         String fontName = KunststoffUtilities.getDefaultFontName();
         String monoFontName = KunststoffUtilities.getMonospaceFontName();
-        menuFont = new FontUIResource(fontName, java.awt.Font.PLAIN, 16);
-        controlFont = new FontUIResource(fontName, java.awt.Font.PLAIN, 16);
-        windowTitleFont = new FontUIResource(fontName, java.awt.Font.BOLD, 16);
-        monospacedFont = new FontUIResource(monoFontName, java.awt.Font.PLAIN, 14);
+        menuFont = KunststoffUtilities.createFont(fontName, Font.PLAIN, 16);
+        controlFont = KunststoffUtilities.createFont(fontName, Font.PLAIN, 16);
+        windowTitleFont = KunststoffUtilities.createFont(fontName, Font.BOLD, 16);
+        monospacedFont = KunststoffUtilities.createFont(monoFontName, Font.PLAIN, 14);
     }
 
     @Override
@@ -186,7 +188,7 @@ public class KunststoffTheme extends DefaultMetalTheme {
 
         // SplitPane — divider
         table.put("SplitPane.dividerSize", 6);
-        table.put("SplitPaneDivider.border", javax.swing.BorderFactory.createEmptyBorder());
+        table.put("SplitPaneDivider.border", BorderFactory.createEmptyBorder());
     }
 
     // ── HSB helpers for palette-derived colours ─────────────────────────

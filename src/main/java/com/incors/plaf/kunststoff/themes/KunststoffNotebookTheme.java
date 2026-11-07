@@ -9,12 +9,15 @@ import java.awt.Font;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 
+import com.incors.plaf.kunststoff.KunststoffTheme;
+import com.incors.plaf.kunststoff.KunststoffUtilities;
+
 /**
  *
  * @author christophw
  * @version
  */
-public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.KunststoffTheme {
+public class KunststoffNotebookTheme extends KunststoffTheme {
 
     // primary colors
     private final ColorUIResource primary1 = new ColorUIResource(22, 22, 54);
@@ -36,12 +39,12 @@ public class KunststoffNotebookTheme extends com.incors.plaf.kunststoff.Kunststo
      * Crates this Theme
      */
     public KunststoffNotebookTheme() {
-        String fontName = com.incors.plaf.kunststoff.KunststoffUtilities.getDefaultFontName();
-        String monoFontName = com.incors.plaf.kunststoff.KunststoffUtilities.getMonospaceFontName();
-        menuFont = new FontUIResource(fontName, Font.PLAIN, 12);
-        controlFont = new FontUIResource(fontName, Font.PLAIN, 11);
-        windowTitleFont = new FontUIResource(fontName, Font.BOLD, 12);
-        monospacedFont = new FontUIResource(monoFontName, Font.PLAIN, 11);
+        String fontName = KunststoffUtilities.getDefaultFontName();
+        String monoFontName = KunststoffUtilities.getMonospaceFontName();
+        menuFont = KunststoffUtilities.createFont(fontName, Font.PLAIN, 12);
+        controlFont = KunststoffUtilities.createFont(fontName, Font.PLAIN, 11);
+        windowTitleFont = KunststoffUtilities.createFont(fontName, Font.BOLD, 12);
+        monospacedFont = KunststoffUtilities.createFont(monoFontName, Font.PLAIN, 11);
     }
 
     @Override
