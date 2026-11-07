@@ -18,16 +18,18 @@ import javax.swing.plaf.FontUIResource;
  */
 public class KunststoffUtilities {
 
-  private static FastGradientPaint cachedGradientPaint = null;
-  private static Color cachedGradientColor1 = null;
-  private static Color cachedGradientColor2 = null;
-  private static Boolean cachedGradientVertical = null;
+  /**
+   * Immutable snapshot of the last gradient paint and its parameters. A single
+   * volatile reference replaces the previous four-field cache so concurrent
+   * painters never observe a paint paired with the wrong colors; the old
+   * synchronized methods serialized every component paint unnecessarily.
+   */
+  private record CachedGradient(FastGradientPaint paint, Color color1, Color color2, boolean vertical) {}
 
-  private static GradientPaint cachedGradientPaint2 = null;
-  private static Color cachedGradientColor1_v2 = null;
-  private static Color cachedGradientColor2_v2 = null;
-  private static Boolean cachedGradientVertical_v2 = null;
-  private static Rectangle cachedGradientRect2 = null;
+  private record CachedGradientV2(GradientPaint paint, Color color1, Color color2, boolean vertical, Rectangle rect) {}
+
+  private static volatile CachedGradient cachedGradient;
+  private static volatile CachedGradientV2 cachedGradientV2;
 
   /**
    * Convenience method to create a translucent <code>Color</color>.
@@ -58,17 +60,15 @@ public class KunststoffUtilities {
   /**
    * Convenience method to draw a gradient on the specified rectangle
    */
-  public static synchronized void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, boolean isVertical) {
+  public static void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, boolean isVertical) {
     Graphics2D g2D = (Graphics2D) g;
+    CachedGradient cached = cachedGradient;
     FastGradientPaint gradient;
-    if (cachedGradientColor1 == color1 && cachedGradientColor2 == color2 && cachedGradientVertical == isVertical) {
-      gradient = cachedGradientPaint;
+    if (cached != null && cached.color1() == color1 && cached.color2() == color2 && cached.vertical() == isVertical) {
+      gradient = cached.paint();
     } else {
       gradient = new FastGradientPaint(color1, color2, isVertical);
-      cachedGradientPaint = gradient;
-      cachedGradientColor1 = color1;
-      cachedGradientColor2 = color2;
-      cachedGradientVertical = isVertical;
+      cachedGradient = new CachedGradient(gradient, color1, color2, isVertical);
     }
     g2D.setPaint(gradient);
     g2D.fill(rect);
@@ -78,7 +78,7 @@ public class KunststoffUtilities {
    * Convenience method to draw a gradient. The first rectangle defines the drawing region,
    * the second rectangle defines the size of the gradient.
    */
-  public static synchronized void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, Rectangle rect2, boolean isVertical) {
+  public static void drawGradient(Graphics g, Color color1, Color color2, Rectangle rect, Rectangle rect2, boolean isVertical) {
     Graphics2D g2D = (Graphics2D) g;
     GradientPaint gradient;
 
@@ -88,20 +88,16 @@ public class KunststoffUtilities {
       return;
     }
 
-    Boolean isVert = isVertical ? Boolean.TRUE : Boolean.FALSE;
-    if (cachedGradientColor1_v2 == color1 && cachedGradientColor2_v2 == color2 && cachedGradientVertical_v2 == isVert && cachedGradientRect2 != null && cachedGradientRect2.equals(rect)) {
-      gradient = cachedGradientPaint2;
+    CachedGradientV2 cached = cachedGradientV2;
+    if (cached != null && cached.color1() == color1 && cached.color2() == color2 && cached.vertical() == isVertical && cached.rect().equals(rect)) {
+      gradient = cached.paint();
     } else {
       if (isVertical) {
         gradient = new GradientPaint(0f, (float) rect.getY(), color1, 0f, (float) (rect.getHeight() + rect.getY()), color2);
       } else {
         gradient = new GradientPaint((float) rect.getX(), 0f, color1, (float) (rect.getWidth() + rect.getX()), 0f, color2);
       }
-      cachedGradientPaint2 = gradient;
-      cachedGradientColor1_v2 = color1;
-      cachedGradientColor2_v2 = color2;
-      cachedGradientVertical_v2 = isVert;
-      cachedGradientRect2 = new Rectangle(rect);
+      cachedGradientV2 = new CachedGradientV2(gradient, color1, color2, isVertical, new Rectangle(rect));
     }
     g2D.setPaint(gradient);
     g2D.fill(rect);
@@ -133,6 +129,7 @@ public class KunststoffUtilities {
 
     private static String cachedDefaultFontName = null;
     private static String cachedMonospaceFontName = null;
+    private static String[] cachedFontFamilies = null;
     private static int cachedMinimumFontSize = -1;
 
     /**
@@ -144,8 +141,20 @@ public class KunststoffUtilities {
         "Fira Code", "Monaco", "Consolas", "Droid Sans Mono", "Hack"
     };
 
+    /**
+     * Installed font family names, enumerated once. Both the proportional and
+     * the monospaced font lookup need this list; scanning every installed font
+     * twice at startup was wasted work.
+     */
+    private static String[] availableFontFamilies() {
+        if (cachedFontFamilies == null) {
+            cachedFontFamilies = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        }
+        return cachedFontFamilies;
+    }
+
     private static boolean[] fontFamilyAvailable(String[] candidates) {
-        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        String[] fonts = availableFontFamilies();
         boolean[] available = new boolean[candidates.length];
         for (int i = 0; i < candidates.length; i++) {
             for (String f : fonts) {

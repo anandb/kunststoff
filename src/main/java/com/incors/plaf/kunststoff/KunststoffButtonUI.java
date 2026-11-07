@@ -49,7 +49,7 @@ public class KunststoffButtonUI extends MetalButtonUI {
     // setOpaque(false) (see autoupdate's HeaderPanel/DetailsPanel); if we skip
     // painting those we end up with bare text on the parent's background.
     boolean paintBody = isBodyPainted(c);
-    int arc = paintBody ? Math.min(14, c.getHeight()) : 0;
+    int arc = paintBody ? Math.min(6, c.getHeight()) : 0;
     RoundRectangle2D shape = new RoundRectangle2D.Float(0, 0, c.getWidth(), c.getHeight(), arc, arc);
 
     Graphics2D g2 = (Graphics2D) g.create();

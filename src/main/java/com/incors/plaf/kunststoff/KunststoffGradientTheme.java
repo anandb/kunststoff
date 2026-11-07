@@ -8,9 +8,9 @@ public class KunststoffGradientTheme implements GradientTheme {
 
   // gradient colors
 
-  private final ColorUIResource componentGradientColorReflection = new ColorUIResource(new Color(255, 255, 255, 96));
+  private final ColorUIResource componentGradientColorReflection = new ColorUIResource(new Color(255, 255, 255, 48));
 
-  private final ColorUIResource componentGradientColorShadow = new ColorUIResource(new Color(0, 0, 0, 48));
+  private final ColorUIResource componentGradientColorShadow = new ColorUIResource(new Color(0, 0, 0, 24));
 
   private final ColorUIResource textComponentGradientColorReflection = new ColorUIResource(new Color(0, 0, 0, 32));
 

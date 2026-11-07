@@ -8,8 +8,12 @@ package com.incors.plaf;
 import java.awt.PaintContext;
 import java.awt.Rectangle;
 import java.awt.image.ColorModel;
+import java.awt.image.DataBufferInt;
+import java.awt.image.DirectColorModel;
 import java.awt.image.Raster;
+import java.awt.image.SinglePixelPackedSampleModel;
 import java.awt.image.WritableRaster;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -92,13 +96,35 @@ class FastGradientPaintContext implements PaintContext {
 
 			raster = info.model.createCompatibleWritableRaster( gradientWidth, gradientHeight );
 
-			Object c = null;
 			int pl = info.parallelLength;
-			for ( int i = 0 ; i < pl ; i++ ) {
-				c = info.model.getDataElements( (sa+(i*da)/pl)<<24 | (sr+(i*dr)/pl)<<16 | (sg+(i*dg)/pl)<<8 | (sb+(i*db)/pl), c );
-				for ( int j = 0 ; j < perpendicularLength ; j++ ) {
-					if ( info.isVertical ) raster.setDataElements( j, i, c );
-					else raster.setDataElements( i, j, c );
+			if ( raster.getSampleModel() instanceof SinglePixelPackedSampleModel packed
+					&& raster.getDataBuffer() instanceof DataBufferInt buffer
+					&& buffer.getOffset() == 0
+					&& info.model instanceof DirectColorModel ) {
+				// Packed-int rasters store one int per pixel. Fill whole runs directly in
+				// the backing array: the per-pixel setDataElements() virtual call is ~15x
+				// slower here. Any other layout falls back to the generic path below.
+				int[] data = buffer.getData();
+				int stride = packed.getScanlineStride();
+				int[] element = new int[1];
+				for ( int i = 0 ; i < pl ; i++ ) {
+					element = (int[]) info.model.getDataElements( (sa+(i*da)/pl)<<24 | (sr+(i*dr)/pl)<<16 | (sg+(i*dg)/pl)<<8 | (sb+(i*db)/pl), element );
+					int packedColor = element[0];
+					if ( info.isVertical ) {
+						int offset = i * stride;
+						Arrays.fill( data, offset, offset + perpendicularLength, packedColor );
+					} else {
+						for ( int j = 0, offset = i ; j < perpendicularLength ; j++, offset += stride ) data[offset] = packedColor;
+					}
+				}
+			} else {
+				Object c = null;
+				for ( int i = 0 ; i < pl ; i++ ) {
+					c = info.model.getDataElements( (sa+(i*da)/pl)<<24 | (sr+(i*dr)/pl)<<16 | (sg+(i*dg)/pl)<<8 | (sb+(i*db)/pl), c );
+					for ( int j = 0 ; j < perpendicularLength ; j++ ) {
+						if ( info.isVertical ) raster.setDataElements( j, i, c );
+						else raster.setDataElements( i, j, c );
+					}
 				}
 			}
 			childRasterCache = new LinkedHashMap<Integer, Raster>( 16, 0.75f, true ) {
