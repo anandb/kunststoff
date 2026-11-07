@@ -30,13 +30,10 @@ package com.incors.plaf.kunststoff;
  *
  */
 
-import com.incors.plaf.kunststoff.themes.KunststoffDesktopTheme;
-
 import javax.swing.*;
 import javax.swing.plaf.*;
 import javax.swing.plaf.metal.*;
 
-import com.incors.plaf.kunststoff.themes.KunststoffDesktopTheme;
 import com.incors.plaf.kunststoff.themes.KunststoffThemeRegistry;
 
 /**
@@ -140,17 +137,15 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
   protected void createDefaultTheme() {
     if (!themeHasBeenSet) {
       String themeName = System.getenv("KUNSTSTOFF_THEME");
+      KunststoffTheme theme = null;
       if (themeName != null && !themeName.trim().isEmpty()) {
-        var registeredTheme = KunststoffThemeRegistry.getTheme(themeName.trim());
-        if (registeredTheme != null) {
-          setCurrentTheme(registeredTheme);
-        } else {
-          // Unknown theme name — fall back to the default theme
-          setCurrentTheme(new KunststoffDesktopTheme());
-        }
-      } else {
-        setCurrentTheme(new KunststoffDesktopTheme());
+        theme = KunststoffThemeRegistry.getTheme(themeName.trim());
       }
+      // Unset or unknown names fall back to the original brown ("brick") theme.
+      if (theme == null) {
+        theme = new KunststoffTheme();
+      }
+      setCurrentTheme(theme);
     }
     if (gradientTheme == null) {
       gradientTheme = new KunststoffGradientTheme();

@@ -9,21 +9,21 @@ import javax.swing.plaf.FontUIResource;
 import com.incors.plaf.kunststoff.KunststoffTheme;
 import com.incors.plaf.kunststoff.KunststoffUtilities;
 
-public class KunststoffOrangeTheme extends KunststoffTheme {
+public class KunststoffMintTheme extends KunststoffTheme {
 
-    private final ColorUIResource primary1 = new ColorUIResource(new Color(150, 50, 0));
-    private final ColorUIResource primary2 = new ColorUIResource(new Color(220, 100, 30));
-    private final ColorUIResource primary3 = new ColorUIResource(new Color(255, 180, 130));
+    private final ColorUIResource primary1 = new ColorUIResource(new Color(30, 75, 70));
+    private final ColorUIResource primary2 = new ColorUIResource(new Color(70, 140, 130));
+    private final ColorUIResource primary3 = new ColorUIResource(new Color(175, 220, 215));
 
-    private final ColorUIResource secondary1 = new ColorUIResource(new Color(60, 30, 0));
-    private final ColorUIResource secondary2 = new ColorUIResource(new Color(120, 60, 20));
-    private final ColorUIResource secondary3 = new ColorUIResource(new Color(235, 210, 185));
+    private final ColorUIResource secondary1 = new ColorUIResource(new Color(30, 60, 58));
+    private final ColorUIResource secondary2 = new ColorUIResource(new Color(90, 135, 130));
+    private final ColorUIResource secondary3 = new ColorUIResource(new Color(225, 240, 238));
 
     private final FontUIResource controlFont;
     private final FontUIResource menuFont;
     private final FontUIResource windowTitleFont;
 
-    public KunststoffOrangeTheme() {
+    public KunststoffMintTheme() {
         String fontName = KunststoffUtilities.getDefaultFontName();
         String monoFontName = KunststoffUtilities.getMonospaceFontName();
         menuFont = KunststoffUtilities.createFont(fontName, Font.PLAIN, 16);
@@ -33,7 +33,7 @@ public class KunststoffOrangeTheme extends KunststoffTheme {
     }
 
     @Override
-    public String getName() { return "Orange"; }
+    public String getName() { return "Mint"; }
 
     @Override
     public ColorUIResource getPrimary1() { return primary1; }
