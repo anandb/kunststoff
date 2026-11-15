@@ -47,6 +47,29 @@ jobs:
             exit 1
           }
 
+      - name: Check Maven Central credentials
+        if: github.event.inputs.dryRun != 'true'
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -z "${MAVEN_CENTRAL_USERNAME}" ] || [ -z "${MAVEN_CENTRAL_PASSWORD}" ]; then
+            echo "::error::MAVEN_CENTRAL_USERNAME / MAVEN_CENTRAL_PASSWORD are empty. Generate a Central Portal user token (central.sonatype.com -> Account -> Generate User Token) and store both on the 'release' environment."
+            exit 1
+          fi
+          # The Portal answers 401 {"error":{"message":"Invalid token"}} for a
+          # rejected token and non-401 for a good one, so this turns the opaque
+          # 401 at upload time into a named failure before anything is built.
+          code="$(curl -s -o "$RUNNER_TEMP/central-auth.json" -w '%{http_code}' \
+            -u "$MAVEN_CENTRAL_USERNAME:$MAVEN_CENTRAL_PASSWORD" \
+            'https://central.sonatype.com/api/v1/publisher/status?id=preflight')"
+          if [ "$code" = "401" ]; then
+            echo "::error::Central Portal rejected the credentials (HTTP 401): $(cat "$RUNNER_TEMP/central-auth.json")"
+            exit 1
+          fi
+          echo "Central Portal accepted the credentials (HTTP $code)"
+
       - name: Build and Deploy
         run: |
           if [ "${{ github.event.inputs.dryRun }}" = "true" ]; then
