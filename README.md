@@ -40,7 +40,8 @@ Example:
 export KUNSTSTOFF_THEME=steelblue
 export KUNSTSTOFF_FONT="Fira Sans"
 export KUNSTSTOFF_MONOSPACE_FONT="Fira Code"
-netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.2/kunstoff-laf-2.0.2.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel
+export KUNSTSTOFF_MIN_FONT_SIZE=13
+netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.3/kunstoff-laf-2.0.3.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel
 ```
 
 ## Themes
@@ -70,7 +71,7 @@ Example:
 
 ```bash
 export KUNSTSTOFF_THEME=brick
-netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.2/kunstoff-laf-2.0.2.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
+netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.3/kunstoff-laf-2.0.3.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
 ```
 
 ## Usage
@@ -80,7 +81,7 @@ netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2
 To use this look and feel with NetBeans, you can run the following command:
 
 ```bash
-netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.2/kunstoff-laf-2.0.2.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
+netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.3/kunstoff-laf-2.0.3.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
 ```
 
 **Note:** This is an example usage. Adjust the paths to match your NetBeans installation directory and the location of the Kunststoff LAF JAR file (after building the project with `mvn package`).

@@ -1,0 +1,61 @@
+name: Release to Maven Central
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      dryRun:
+        description: 'Dry run (build and sign, but do not upload)'
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          server-id: central
+          server-username: MAVEN_CENTRAL_USERNAME
+          server-password: MAVEN_CENTRAL_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+
+      # A tag that disagrees with <version> would deploy the wrong coordinates
+      # (or a duplicate), so fail before anything reaches Central.
+      - name: Check tag matches project version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          set -euo pipefail
+          version="$(./mvnw -B -q help:evaluate -Dexpression=project.version -DforceStdout | tail -n 1)"
+          echo "tag=${GITHUB_REF_NAME} pom=${version}"
+          test "v${version}" = "${GITHUB_REF_NAME}" || {
+            echo "::error::tag ${GITHUB_REF_NAME} does not match pom version ${version}"
+            exit 1
+          }
+
+      - name: Build and Deploy
+        run: |
+          if [ "${{ github.event.inputs.dryRun }}" = "true" ]; then
+            echo "Running in dry-run mode. Skipping deployment."
+            ./mvnw -B verify -P release
+          else
+            ./mvnw -B deploy -P release
+          fi
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
