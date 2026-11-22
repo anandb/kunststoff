@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.anandb</groupId>
 	<artifactId>kunstoff-laf</artifactId>
-	<version>2.0.4</version>
+	<version>2.0.5</version>
 	<packaging>jar</packaging>
 	<name>Kunststoff Look and Feel</name>
 	<description> The Kunststoff Look and Feel is an extension to the the Java ™ Metal Look and Feel. This makes
