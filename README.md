@@ -15,6 +15,7 @@ This fork includes several modifications and improvements over the original Sour
 - **Brown Theme Variant**: Changes to theme colors featuring brown tones for aesthetic customization
 - **Font Change**: Default font set to Segoe UI for improved readability
 - **Combo Boxes**: The selected value is no longer clipped when a combo box is shorter than its preferred height
+- **Table Rows**: Row heights are derived from the table font, so cell text is no longer clipped by `JTable`'s fixed 16 pixel default row height
 - **Build Configuration**: Updates to Maven project configuration (pom.xml)
 
 ## Environment variables

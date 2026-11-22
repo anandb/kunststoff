@@ -110,6 +110,7 @@ public class KunststoffLookAndFeel extends MetalLookAndFeel {
     putDefault(table, "MenuUI");
     putDefault(table, "ScrollBarUI");
     putDefault(table, "ProgressBarUI");
+    putDefault(table, "TableUI");
     putDefault(table, "TableHeaderUI");
     putDefault(table, "InternalFrameUI");
     // if you want a check box icon with gradients, just remove the comment from
