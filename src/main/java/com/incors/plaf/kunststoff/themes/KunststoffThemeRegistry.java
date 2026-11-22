@@ -16,7 +16,7 @@ import com.incors.plaf.kunststoff.KunststoffTheme;
  * Available themes:
  *   default    – gray-blue (KunststoffTheme base colors)
  *   brick      – warm brown (original Kunststoff brown)
- *   brushed steel – brushed aluminium silver with QuickTime blue accents
+ *   brushed-steel – brushed aluminium silver with QuickTime blue accents
  *   aqua       – teal/aqua
  *   burgundy   – muted wine red
  *   creme      – warm cream/tan
@@ -37,7 +37,7 @@ public final class KunststoffThemeRegistry {
     static {
         register(new KunststoffDefaultTheme(), "default");
         register(new KunststoffTheme(), "brick");          // original brown
-        register(new KunststoffBrushedSteelTheme(), "brushed steel");
+        register(new KunststoffBrushedSteelTheme(), "brushed-steel");
         register(new KunststoffAquaTheme(), "aqua");
         register(new KunststoffBurgundyTheme(), "burgundy");
         register(new KunststoffCremeTheme(), "creme");
@@ -61,8 +61,8 @@ public final class KunststoffThemeRegistry {
 
     /**
      * Returns the theme for the given name, or null if not found. Matching is
-     * case-insensitive and ignores spaces and hyphens, so "brushed steel",
-     * "Brushed Steel", "brushedsteel" and "brushed-steel" all match.
+     * case-insensitive and ignores spaces and hyphens, so "brushed-steel",
+     * "Brushed Steel" and "brushedsteel" all match.
      */
     public static KunststoffTheme getTheme(String name) {
         if (name == null || name.trim().isEmpty()) {

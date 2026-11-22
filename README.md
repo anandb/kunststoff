@@ -15,7 +15,7 @@ This fork includes several modifications and improvements over the original Sour
 - **Brown Theme Variant**: Changes to theme colors featuring brown tones for aesthetic customization
 - **Font Change**: Default font set to Segoe UI for improved readability
 - **Combo Boxes**: The selected value is no longer clipped when a combo box is shorter than its preferred height
-- **Brushed Steel Theme**: A QuickTime-inspired brushed aluminium theme (`KUNSTSTOFF_THEME="brushed steel"`)
+- **Brushed Steel Theme**: A QuickTime-inspired brushed aluminium theme (`KUNSTSTOFF_THEME=brushed-steel`)
 - **Table Rows**: Row heights are derived from the table font, so cell text is no longer clipped by `JTable`'s fixed 16 pixel default row height
 - **Build Configuration**: Updates to Maven project configuration (pom.xml)
 
@@ -56,7 +56,7 @@ Select a theme at runtime with the `KUNSTSTOFF_THEME` environment variable (case
 | `default` | Gray-blue (base colors) |
 | `brick` | Warm brown (original Kunststoff) |
 | `aqua` | Teal/aqua |
-| `brushed steel` | Brushed aluminium silver with QuickTime blue accents |
+| `brushed-steel` | Brushed aluminium silver with QuickTime blue accents |
 | `burgundy` | Muted wine red |
 | `creme` | Warm cream/tan |
 | `forest` | Deep cool green |
@@ -69,7 +69,7 @@ Select a theme at runtime with the `KUNSTSTOFF_THEME` environment variable (case
 | `steelblue` | Blue-gray |
 | `terracotta` | Warm clay orange |
 
-Names are matched case-insensitively, and spaces and hyphens in a theme name are ignored, so `brushed steel`, `brushedsteel` and `brushed-steel` all select the same theme. If `KUNSTSTOFF_THEME` is unset, empty, or not recognised, the look and feel uses `brick`, the original Kunststoff brown theme; the `default` entry selects `KunststoffDefaultTheme` (gray-blue).
+Names are matched case-insensitively, and spaces and hyphens in a theme name are ignored, so `brushed-steel`, `brushedsteel` and `brushed steel` all select the same theme. If `KUNSTSTOFF_THEME` is unset, empty, or not recognised, the look and feel uses `brick`, the original Kunststoff brown theme; the `default` entry selects `KunststoffDefaultTheme` (gray-blue).
 
 Example:
 
