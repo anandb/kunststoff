@@ -146,6 +146,43 @@ public class KunststoffButtonUI extends MetalButtonUI {
     return MetalLookAndFeel.getControlDarkShadow();
   }
 
+  /**
+   * Metal lays the label out inside the button's border insets. Those insets
+   * are sized for ordinary buttons; when a button is squeezed below them - as
+   * small cell renderers such as a table's "..." button are - the label is
+   * pushed out of the visible area and clipped. In that case draw it centred in
+   * the button instead of inside the padded area. Buttons with an icon keep the
+   * icon/text layout, which must not be shifted relative to the icon.
+   */
+  @Override
+  protected void paintText(Graphics g, JComponent c, Rectangle textRect, String text) {
+    super.paintText(g, c, textRectFor(c, textRect, text), text);
+  }
+
+  /** {@code textRect}, or a centred one when the padding leaves no room. */
+  private static Rectangle textRectFor(JComponent c, Rectangle textRect, String text) {
+    if (!(c instanceof AbstractButton) || ((AbstractButton) c).getIcon() != null) {
+      return textRect;
+    }
+    FontMetrics metrics = c.getFontMetrics(c.getFont());
+    Insets insets = c.getInsets();
+    int lineHeight = metrics.getHeight();
+    int textWidth = metrics.stringWidth(text != null ? text : "");
+    boolean tooShort = c.getHeight() - insets.top - insets.bottom < lineHeight;
+    boolean tooNarrow = c.getWidth() - insets.left - insets.right < textWidth;
+    if (!tooShort && !tooNarrow) {
+      return textRect;
+    }
+    Rectangle centred = new Rectangle(textRect);
+    if (tooShort) {
+      centred.y = Math.max(0, (c.getHeight() - lineHeight) / 2);
+    }
+    if (tooNarrow) {
+      centred.x = Math.max(0, (c.getWidth() - textWidth) / 2);
+    }
+    return centred;
+  }
+
   private void paintGradient(Graphics g, JComponent c) {
     if (!isBodyPainted(c)) {
       return;
