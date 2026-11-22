@@ -14,6 +14,7 @@ This fork includes several modifications and improvements over the original Sour
 - **Menu Spacing**: Added adjustments to menu spacing for better visual hierarchy
 - **Brown Theme Variant**: Changes to theme colors featuring brown tones for aesthetic customization
 - **Font Change**: Default font set to Segoe UI for improved readability
+- **Combo Boxes**: The selected value is no longer clipped when a combo box is shorter than its preferred height
 - **Build Configuration**: Updates to Maven project configuration (pom.xml)
 
 ## Environment variables
@@ -41,7 +42,7 @@ export KUNSTSTOFF_THEME=steelblue
 export KUNSTSTOFF_FONT="Fira Sans"
 export KUNSTSTOFF_MONOSPACE_FONT="Fira Code"
 export KUNSTSTOFF_MIN_FONT_SIZE=13
-netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.3/kunstoff-laf-2.0.3.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel
+netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.4/kunstoff-laf-2.0.4.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel
 ```
 
 ## Themes
@@ -71,7 +72,7 @@ Example:
 
 ```bash
 export KUNSTSTOFF_THEME=brick
-netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.3/kunstoff-laf-2.0.3.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
+netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.4/kunstoff-laf-2.0.4.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
 ```
 
 ## Usage
@@ -81,7 +82,7 @@ netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2
 To use this look and feel with NetBeans, you can run the following command:
 
 ```bash
-netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.3/kunstoff-laf-2.0.3.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
+netbeans -J-Xmx8192m -cp:p "$HOME/.m2/repository/io/github/anandb/kunstoff-laf/2.0.4/kunstoff-laf-2.0.4.jar" --laf com.incors.plaf.kunststoff.KunststoffLookAndFeel --fontsize 16
 ```
 
 **Note:** This is an example usage. Adjust the paths to match your NetBeans installation directory and the location of the Kunststoff LAF JAR file (after building the project with `mvn package`).
