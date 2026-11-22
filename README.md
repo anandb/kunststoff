@@ -15,6 +15,7 @@ This fork includes several modifications and improvements over the original Sour
 - **Brown Theme Variant**: Changes to theme colors featuring brown tones for aesthetic customization
 - **Font Change**: Default font set to Segoe UI for improved readability
 - **Combo Boxes**: The selected value is no longer clipped when a combo box is shorter than its preferred height
+- **Brushed Steel Theme**: A QuickTime-inspired brushed aluminium theme (`KUNSTSTOFF_THEME="brushed steel"`)
 - **Table Rows**: Row heights are derived from the table font, so cell text is no longer clipped by `JTable`'s fixed 16 pixel default row height
 - **Build Configuration**: Updates to Maven project configuration (pom.xml)
 
@@ -24,7 +25,7 @@ All variables are read once, when the look and feel is initialised. Set them bef
 
 | Variable | Purpose | Values and fallback |
 |----------|---------|---------------------|
-| `KUNSTSTOFF_THEME` | Selects the colour theme. | A theme name, matched case-insensitively after trimming. If unset, empty, or unknown, the look and feel uses `brick`, the original Kunststoff brown theme. See [Themes](#themes). |
+| `KUNSTSTOFF_THEME` | Selects the colour theme. | A theme name, matched case-insensitively after trimming; spaces and hyphens are ignored. If unset, empty, or unknown, the look and feel uses `brick`, the original Kunststoff brown theme. See [Themes](#themes). |
 | `KUNSTSTOFF_FONT` | Family name for the proportional UI font (menus, controls, window titles). | Any installed font family, e.g. `Fira Sans`. Falls back to the `kunststoff.font` system property, then to `Segoe UI`, `Fira Sans`, or the logical `SansSerif`, whichever is available first. |
 | `KUNSTSTOFF_MONOSPACE_FONT` | Family name for monospaced text (password fields, text areas, text panes, editor panes). | Any installed monospaced family, e.g. `Fira Code`. Falls back to the first available of `Fira Code`, `Monaco`, `Consolas`, `Droid Sans Mono`, `Hack`, then the logical `Monospaced`. |
 | `KUNSTSTOFF_MIN_FONT_SIZE` | Minimum font size in points. Every theme font (UI text, menus, window titles, monospaced text) is raised to at least this size; larger theme sizes are kept. | A positive integer. If unset, empty, invalid, or non-positive, the floor is `12`. |
@@ -55,6 +56,7 @@ Select a theme at runtime with the `KUNSTSTOFF_THEME` environment variable (case
 | `default` | Gray-blue (base colors) |
 | `brick` | Warm brown (original Kunststoff) |
 | `aqua` | Teal/aqua |
+| `brushed steel` | Brushed aluminium silver with QuickTime blue accents |
 | `burgundy` | Muted wine red |
 | `creme` | Warm cream/tan |
 | `forest` | Deep cool green |
@@ -67,7 +69,7 @@ Select a theme at runtime with the `KUNSTSTOFF_THEME` environment variable (case
 | `steelblue` | Blue-gray |
 | `terracotta` | Warm clay orange |
 
-Names are matched case-insensitively. If `KUNSTSTOFF_THEME` is unset, empty, or not recognised, the look and feel uses `brick`, the original Kunststoff brown theme; the `default` entry selects `KunststoffDefaultTheme` (gray-blue).
+Names are matched case-insensitively, and spaces and hyphens in a theme name are ignored, so `brushed steel`, `brushedsteel` and `brushed-steel` all select the same theme. If `KUNSTSTOFF_THEME` is unset, empty, or not recognised, the look and feel uses `brick`, the original Kunststoff brown theme; the `default` entry selects `KunststoffDefaultTheme` (gray-blue).
 
 Example:
 
